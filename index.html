@@ -1,45 +1,920 @@
-<html>
+<!DOCTYPE html>
+<html lang="vi">
 
 <head>
-    <title>Nhập Mật Khẩu</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Nhập Mật Khẩu</title>
+
+    <!-- Bootstrap -->
+    <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    >
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: url("kitty.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .main_container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 10px;
+        }
+
+        /* =========================
+           MODAL NHẬP MẬT KHẨU
+        ========================= */
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+            margin-bottom: 15px;
+        }
+
+        /* =========================
+           POPUP GỢI Ý MẬT KHẨU
+        ========================= */
+
+        #hintOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(3px);
+
+            padding: 20px;
+        }
+
+        .hint-card {
+            position: relative;
+
+            width: 330px;
+            max-width: 92vw;
+
+            padding: 28px 25px 26px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.18),
+                inset 0 0 25px rgba(255, 192, 203, 0.3);
+
+            text-align: center;
+
+            animation: popupShow 0.3s ease;
+        }
+
+        @keyframes popupShow {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hint-title {
+            margin-bottom: 18px;
+
+            color: #e91e63;
+
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        /* Nút X */
+        .hint-close {
+            position: absolute;
+            right: 12px;
+            top: 10px;
+
+            width: 32px;
+            height: 32px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #ff2d76;
+            color: white;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            line-height: 28px;
+
+            cursor: pointer;
+
+            box-shadow: 0 3px 10px rgba(255, 45, 118, 0.4);
+        }
+
+        .hint-close:hover {
+            transform: scale(1.08);
+        }
+
+        /* =========================
+           VÙNG CÀO
+        ========================= */
+
+        .scratch-wrapper {
+            position: relative;
+
+            width: 230px;
+            height: 90px;
+
+            margin: 0 auto;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow: 0 7px 20px rgba(255, 51, 119, 0.25);
+        }
+
+        /* Mật khẩu nằm dưới canvas */
+        .password-reveal {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #fff4f8,
+                #ffe5ef
+            );
+
+            color: #db165d;
+
+            font-size: 32px;
+            font-weight: 900;
+
+            letter-spacing: 7px;
+
+            user-select: none;
+        }
+
+        /* Canvas màu hồng để cào */
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            cursor: grab;
+
+            touch-action: none;
+        }
+
+        #scratchCanvas:active {
+            cursor: grabbing;
+        }
+
+        .scratch-text {
+            margin-top: 14px;
+
+            color: #999;
+
+            font-size: 13px;
+        }
+
+        .scratch-text span {
+            color: #ff3b7d;
+            font-weight: bold;
+        }
+
+        /* =========================
+           COUNTDOWN
+        ========================= */
+
+        #countdownOverlay {
+            position: fixed;
+            inset: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            background: rgba(0, 0, 0, 0.95);
+
+            z-index: 30000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            color: white;
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        #countdownOverlay h1 {
+            margin: 0;
+
+            font-size: 5rem;
+
+            animation: pulse 1s infinite;
+        }
+
+        #countdownOverlay p {
+            margin-top: 20px;
+
+            font-size: 1.5rem;
+
+            opacity: 0.8;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 576px) {
+
+            .hint-card {
+                width: 300px;
+                padding: 25px 15px;
+            }
+
+            .scratch-wrapper {
+                width: 220px;
+                height: 85px;
+            }
+
+            .password-reveal {
+                font-size: 27px;
+                letter-spacing: 5px;
+            }
+
+            #countdownOverlay h1 {
+                font-size: 4rem;
+            }
+
+            #countdownOverlay p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div id="show-content"></div>
+
+    <!-- Nút mở modal -->
     <div class="main_container">
-        <button type="button" class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#modalHoiNgaySinh">Click vào đi em</button>
+
+        <button
+            type="button"
+            class="btn btn-outline-primary btn-lg"
+            data-toggle="modal"
+            data-target="#modalHoiNgaySinh"
+        >
+            Click vào đi em
+        </button>
+
     </div>
-    <div class="modal" id="modalHoiNgaySinh">
-        <div class="modal-dialog">
+
+
+    <!-- =========================
+         MODAL NHẬP MẬT KHẨU
+    ========================== -->
+
+    <div
+        class="modal fade"
+        id="modalHoiNgaySinh"
+        tabindex="-1"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h5>Nhập Mật Khẩu</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <h5 class="modal-title">
+                        Nhập Mật Khẩu
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                    >
+                        &times;
+                    </button>
+
                 </div>
+
+
                 <div class="modal-body">
-                    <center>
-                        <img id="figureImage" src="love.gif" width="250">
-                    </center>
-                    <input type="text" id="nhapngaysinh" class="form-control" placeholder="Mk là ngày sinh của em á VD: 01/01/2000">
+
+                    <div class="text-center">
+
+                        <img
+                            id="figureImage"
+                            src="love.gif"
+                            alt="Love"
+                        >
+
+                    </div>
+
+                    <input
+                        type="text"
+                        id="nhapngaysinh"
+                        class="form-control"
+                        placeholder="Mk là ngày sinh của em á VD: 01012000"
+                        autocomplete="off"
+                        inputmode="numeric"
+                    >
+
                 </div>
+
+
                 <div class="modal-footer">
-                    <button type="button" onclick="checkValid()" class="btn btn-success">Tiếp tục</button>
+
+                    <button
+                        type="button"
+                        onclick="checkValid()"
+                        class="btn btn-success"
+                    >
+                        Tiếp tục
+                    </button>
+
                 </div>
+
             </div>
         </div>
     </div>
-    <script src="sna12.js"></script>
+
+
+    <!-- =========================
+         POPUP CÀO GỢI Ý
+    ========================== -->
+
+    <div id="hintOverlay">
+
+        <div class="hint-card">
+
+            <button
+                class="hint-close"
+                onclick="closeHint()"
+            >
+                ×
+            </button>
+
+            <div class="hint-title">
+                🎁 Gợi ý mật khẩu
+            </div>
+
+            <div class="scratch-wrapper">
+
+                <!-- MẬT KHẨU THẬT -->
+                <div class="password-reveal">
+                    26082004
+                </div>
+
+                <!-- LỚP PHỦ ĐỂ CÀO -->
+                <canvas id="scratchCanvas"></canvas>
+
+            </div>
+
+            <div class="scratch-text">
+                👉 <span>Cào lớp màu hồng</span> để xem mật khẩu
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+
+        /* =========================
+           KIỂM TRA MẬT KHẨU
+        ========================== */
+
+        function checkValid() {
+
+            const input =
+                document.getElementById("nhapngaysinh");
+
+            const inputValue =
+                input.value.trim();
+
+
+            if (inputValue === "") {
+
+                alert("Vui lòng nhập ngày sinh!");
+
+                return;
+            }
+
+
+            /* ĐÚNG MẬT KHẨU */
+            if (inputValue === "26082004") {
+
+                $("#modalHoiNgaySinh").modal("hide");
+
+                startCountdown();
+
+            }
+
+            /* SAI MẬT KHẨU */
+            else {
+
+                showHint();
+
+            }
+        }
+
+
+        /* =========================
+           HIỆN POPUP GỢI Ý
+        ========================== */
+
+        function showHint() {
+
+            const hintOverlay =
+                document.getElementById("hintOverlay");
+
+            hintOverlay.style.display = "flex";
+
+            /* Reset lại thẻ cào mỗi lần mở */
+            setTimeout(function () {
+
+                initScratchCard();
+
+            }, 100);
+
+        }
+
+
+        /* =========================
+           ĐÓNG POPUP
+        ========================== */
+
+        function closeHint() {
+
+            document.getElementById(
+                "hintOverlay"
+            ).style.display = "none";
+
+            const input =
+                document.getElementById("nhapngaysinh");
+
+            input.value = "";
+
+            setTimeout(function () {
+
+                input.focus();
+
+            }, 200);
+        }
+
+
+        /* =========================
+           TẠO THẺ CÀO
+        ========================== */
+
+        function initScratchCard() {
+
+            const canvas =
+                document.getElementById("scratchCanvas");
+
+            const wrapper =
+                document.querySelector(".scratch-wrapper");
+
+            /*
+                Tăng độ phân giải canvas
+                để không bị mờ trên điện thoại
+            */
+
+            const ratio =
+                window.devicePixelRatio || 1;
+
+            const width =
+                wrapper.clientWidth;
+
+            const height =
+                wrapper.clientHeight;
+
+
+            canvas.width =
+                width * ratio;
+
+            canvas.height =
+                height * ratio;
+
+
+            canvas.style.width =
+                width + "px";
+
+            canvas.style.height =
+                height + "px";
+
+
+            const ctx =
+                canvas.getContext("2d");
+
+
+            ctx.setTransform(
+                ratio,
+                0,
+                0,
+                ratio,
+                0,
+                0
+            );
+
+
+            /*
+                Nền thẻ cào màu hồng
+            */
+
+            const gradient =
+                ctx.createLinearGradient(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+            gradient.addColorStop(
+                0,
+                "#ff75a8"
+            );
+
+            gradient.addColorStop(
+                0.5,
+                "#ff2e78"
+            );
+
+            gradient.addColorStop(
+                1,
+                "#ec0b59"
+            );
+
+
+            ctx.fillStyle = gradient;
+
+            ctx.fillRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            /*
+                Chữ "cào để xem"
+            */
+
+            ctx.globalCompositeOperation =
+                "source-over";
+
+            ctx.fillStyle =
+                "#ffffff";
+
+            ctx.font =
+                "bold 16px Arial";
+
+            ctx.textAlign =
+                "center";
+
+            ctx.textBaseline =
+                "middle";
+
+            ctx.fillText(
+                "cào để xem",
+                width / 2,
+                height / 2
+            );
+
+
+            /*
+                Bắt đầu chế độ xóa
+            */
+
+            ctx.globalCompositeOperation =
+                "destination-out";
+
+
+            let scratching = false;
+
+
+            function getPosition(e) {
+
+                const rect =
+                    canvas.getBoundingClientRect();
+
+                return {
+
+                    x:
+                        e.clientX -
+                        rect.left,
+
+                    y:
+                        e.clientY -
+                        rect.top
+
+                };
+            }
+
+
+            function scratch(e) {
+
+                if (!scratching) {
+                    return;
+                }
+
+                e.preventDefault();
+
+                const pos =
+                    getPosition(e);
+
+
+                /*
+                    Kích thước đầu cào
+                */
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    pos.x,
+                    pos.y,
+                    22,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fill();
+            }
+
+
+            canvas.onpointerdown =
+                function (e) {
+
+                    scratching = true;
+
+                    canvas.setPointerCapture(
+                        e.pointerId
+                    );
+
+                    scratch(e);
+                };
+
+
+            canvas.onpointermove =
+                function (e) {
+
+                    scratch(e);
+
+                };
+
+
+            canvas.onpointerup =
+                function () {
+
+                    scratching = false;
+
+                    checkScratchPercent();
+
+                };
+
+
+            canvas.onpointercancel =
+                function () {
+
+                    scratching = false;
+
+                };
+
+
+            /*
+                Kiểm tra người dùng
+                đã cào đủ hay chưa
+            */
+
+            function checkScratchPercent() {
+
+                /*
+                    Lấy pixel thật của canvas.
+                */
+
+                const imageData =
+                    ctx.getImageData(
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+
+
+                const pixels =
+                    imageData.data;
+
+
+                let transparentPixels = 0;
+
+                let totalPixels =
+                    pixels.length / 4;
+
+
+                /*
+                    Kiểm tra alpha
+                */
+
+                for (
+                    let i = 3;
+                    i < pixels.length;
+                    i += 4
+                ) {
+
+                    if (pixels[i] < 50) {
+
+                        transparentPixels++;
+
+                    }
+                }
+
+
+                const scratchedPercent =
+                    (
+                        transparentPixels /
+                        totalPixels
+                    ) * 100;
+
+
+                /*
+                    Cào trên 55%
+                    => mở hết thẻ
+                */
+
+                if (scratchedPercent > 55) {
+
+                    canvas.style.transition =
+                        "opacity 0.5s";
+
+                    canvas.style.opacity =
+                        "0";
+
+
+                    /*
+                        Sau khi mở hết,
+                        khóa không cho cào nữa
+                    */
+
+                    canvas.style.pointerEvents =
+                        "none";
+                }
+            }
+        }
+
+
+        /* =========================
+           COUNTDOWN KHI NHẬP ĐÚNG
+        ========================== */
+
+        function startCountdown() {
+
+            const countdownHTML = `
+
+                <div id="countdownOverlay">
+
+                    <h1>10</h1>
+
+                    <p>
+                        Chuẩn bị đón điều bất ngờ nào... ❤️
+                    </p>
+
+                </div>
+
+            `;
+
+
+            $("body").append(
+                countdownHTML
+            );
+
+
+            let count = 10;
+
+            const countdownElement =
+                $("#countdownOverlay h1");
+
+
+            const timer =
+                setInterval(
+                    function () {
+
+                        count--;
+
+                        countdownElement.text(
+                            count
+                        );
+
+
+                        if (count <= 0) {
+
+                            clearInterval(
+                                timer
+                            );
+
+
+                            $("#countdownOverlay")
+                                .fadeOut(
+                                    800,
+                                    function () {
+
+                                        window.location.href =
+                                            "demnguoc.html";
+
+                                    }
+                                );
+                        }
+
+                    },
+                    1000
+                );
+        }
+
+
+        /* =========================
+           NHẤN ENTER
+        ========================== */
+
+        document
+            .getElementById("nhapngaysinh")
+            .addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        checkValid();
+
+                    }
+
+                }
+            );
+
+    </script>
+
 </body>
 
 </html>
-
-
-
-
