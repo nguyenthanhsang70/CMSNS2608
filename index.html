@@ -1,920 +1,757 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
-
-    <title>Nhập Mật Khẩu</title>
-
-    <!-- Bootstrap -->
-    <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    >
-
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background: url("kitty.jpg") no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        .main_container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 10px;
-        }
-
-        /* =========================
-           MODAL NHẬP MẬT KHẨU
-        ========================= */
-
-        .modal-body img {
-            width: 100%;
-            height: auto;
-            max-width: 300px;
-            margin-bottom: 15px;
-        }
-
-        /* =========================
-           POPUP GỢI Ý MẬT KHẨU
-        ========================= */
-
-        #hintOverlay {
-            position: fixed;
-            inset: 0;
-            z-index: 20000;
-
-            display: none;
-            align-items: center;
-            justify-content: center;
-
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(3px);
-
-            padding: 20px;
-        }
-
-        .hint-card {
-            position: relative;
-
-            width: 330px;
-            max-width: 92vw;
-
-            padding: 28px 25px 26px;
-
-            background: rgba(255, 255, 255, 0.96);
-
-            border: 4px solid rgba(255, 255, 255, 0.8);
-            border-radius: 25px;
-
-            box-shadow:
-                0 12px 35px rgba(0, 0, 0, 0.18),
-                inset 0 0 25px rgba(255, 192, 203, 0.3);
-
-            text-align: center;
-
-            animation: popupShow 0.3s ease;
-        }
-
-        @keyframes popupShow {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .hint-title {
-            margin-bottom: 18px;
-
-            color: #e91e63;
-
-            font-size: 21px;
-            font-weight: 800;
-        }
-
-        /* Nút X */
-        .hint-close {
-            position: absolute;
-            right: 12px;
-            top: 10px;
-
-            width: 32px;
-            height: 32px;
-
-            border: none;
-            border-radius: 50%;
-
-            background: #ff2d76;
-            color: white;
-
-            font-size: 22px;
-            font-weight: bold;
-
-            line-height: 28px;
-
-            cursor: pointer;
-
-            box-shadow: 0 3px 10px rgba(255, 45, 118, 0.4);
-        }
-
-        .hint-close:hover {
-            transform: scale(1.08);
-        }
-
-        /* =========================
-           VÙNG CÀO
-        ========================= */
-
-        .scratch-wrapper {
-            position: relative;
-
-            width: 230px;
-            height: 90px;
-
-            margin: 0 auto;
-
-            border-radius: 15px;
-
-            overflow: hidden;
-
-            box-shadow: 0 7px 20px rgba(255, 51, 119, 0.25);
-        }
-
-        /* Mật khẩu nằm dưới canvas */
-        .password-reveal {
-            position: absolute;
-            inset: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: linear-gradient(
-                135deg,
-                #fff4f8,
-                #ffe5ef
-            );
-
-            color: #db165d;
-
-            font-size: 32px;
-            font-weight: 900;
-
-            letter-spacing: 7px;
-
-            user-select: none;
-        }
-
-        /* Canvas màu hồng để cào */
-        #scratchCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 100%;
-
-            cursor: grab;
-
-            touch-action: none;
-        }
-
-        #scratchCanvas:active {
-            cursor: grabbing;
-        }
-
-        .scratch-text {
-            margin-top: 14px;
-
-            color: #999;
-
-            font-size: 13px;
-        }
-
-        .scratch-text span {
-            color: #ff3b7d;
-            font-weight: bold;
-        }
-
-        /* =========================
-           COUNTDOWN
-        ========================= */
-
-        #countdownOverlay {
-            position: fixed;
-            inset: 0;
-
-            width: 100vw;
-            height: 100vh;
-
-            background: rgba(0, 0, 0, 0.95);
-
-            z-index: 30000;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-
-            color: white;
-            text-align: center;
-
-            padding: 20px;
-        }
-
-        #countdownOverlay h1 {
-            margin: 0;
-
-            font-size: 5rem;
-
-            animation: pulse 1s infinite;
-        }
-
-        #countdownOverlay p {
-            margin-top: 20px;
-
-            font-size: 1.5rem;
-
-            opacity: 0.8;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Mobile */
-        @media (max-width: 576px) {
-
-            .hint-card {
-                width: 300px;
-                padding: 25px 15px;
-            }
-
-            .scratch-wrapper {
-                width: 220px;
-                height: 85px;
-            }
-
-            .password-reveal {
-                font-size: 27px;
-                letter-spacing: 5px;
-            }
-
-            #countdownOverlay h1 {
-                font-size: 4rem;
-            }
-
-            #countdownOverlay p {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#ffedf4" />
+  <title>Nhập Mật Khẩu</title>
+
+  <style>
+    :root {
+      --pink: #ff4f91;
+      --pink-dark: #e92f76;
+      --pink-soft: #ffe8f1;
+      --text: #30232a;
+      --muted: #8e7b84;
+      --white: #ffffff;
+      --danger: #e84668;
+      --success: #2fb77d;
+      --shadow: 0 26px 70px rgba(126, 47, 81, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100dvh;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(255, 235, 244, 0.7), rgba(255, 245, 249, 0.86)),
+        url("kitty.jpg") center / cover no-repeat fixed;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      isolation: isolate;
+    }
+
+    .blob {
+      position: absolute;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .blob.one {
+      width: 250px;
+      height: 250px;
+      top: -90px;
+      left: -70px;
+      background: rgba(255, 103, 158, 0.38);
+    }
+
+    .blob.two {
+      width: 310px;
+      height: 310px;
+      right: -120px;
+      bottom: -130px;
+      background: rgba(255, 184, 210, 0.55);
+    }
+
+    .login-card {
+      width: min(430px, 100%);
+      padding: 34px 30px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: cardIn 0.55s cubic-bezier(.2,.75,.25,1);
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .art-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .art {
+      width: 96px;
+      height: 96px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #fff, #ffe2ee);
+      box-shadow: 0 12px 28px rgba(255, 78, 145, .18);
+    }
+
+    .art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .title {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1.15;
+      font-weight: 850;
+      letter-spacing: -0.8px;
+    }
+
+    .subtitle {
+      margin: 10px auto 25px;
+      max-width: 310px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .field-label {
+      display: block;
+      margin: 0 0 9px 4px;
+      font-size: 13px;
+      font-weight: 760;
+      color: #5d4c54;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .password-input {
+      width: 100%;
+      height: 58px;
+      padding: 0 58px 0 18px;
+      border: 1.5px solid #eed5df;
+      border-radius: 18px;
+      outline: none;
+      background: rgba(255,255,255,.9);
+      color: #372a30;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      transition: .2s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+    }
+
+    .password-input::placeholder {
+      color: #baa7b0;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .password-input:focus {
+      border-color: #ff7bad;
+      box-shadow: 0 0 0 4px rgba(255, 79, 145, .11);
+    }
+
+    .password-input.error {
+      border-color: #f07893;
+      animation: shake .35s ease;
+      box-shadow: 0 0 0 4px rgba(232, 70, 104, .09);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 11px;
+      width: 40px;
+      height: 40px;
+      transform: translateY(-50%);
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: #987f89;
+      cursor: pointer;
+    }
+
+    .toggle-password:hover {
+      background: #fff0f5;
+      color: var(--pink-dark);
+    }
+
+    .message {
+      min-height: 22px;
+      margin: 8px 4px 4px;
+      font-size: 13px;
+      font-weight: 650;
+      color: var(--danger);
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 56px;
+      margin-top: 6px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff67a0, #ed2e76);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 13px 30px rgba(233, 47, 118, .3);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 34px rgba(233, 47, 118, .36);
+    }
+
+    .submit-btn:active {
+      transform: scale(.985);
+    }
+
+    .btn-love {
+      width: 26px;
+      height: 26px;
+      margin-left: 7px;
+      vertical-align: middle;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .hint-btn {
+      width: 100%;
+      margin-top: 14px;
+      border: 0;
+      background: transparent;
+      color: #9c7f8a;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer-note {
+      margin: 22px 0 0;
+      text-align: center;
+      color: #b099a3;
+      font-size: 12px;
+    }
+
+    /* HINT OVERLAY */
+    #hintOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(44, 25, 34, .42);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+    }
+
+    #hintOverlay.show {
+      display: flex;
+    }
+
+    .hint-card {
+      position: relative;
+      width: min(360px, 100%);
+      padding: 30px 24px 25px;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 28px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 25px 70px rgba(64, 25, 42, .25);
+      text-align: center;
+      animation: pop .28s ease;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(.9) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .hint-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff0f5;
+      color: var(--pink-dark);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .hint-icon {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: #fff0f6;
+      font-size: 26px;
+    }
+
+    .hint-title {
+      margin: 0 0 7px;
+      color: #3b2931;
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .hint-desc {
+      margin: 0 0 18px;
+      color: #99818b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .scratch-wrapper {
+      position: relative;
+      width: 240px;
+      height: 92px;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #fff3f7;
+      box-shadow: 0 10px 25px rgba(255, 68, 136, .17);
+    }
+
+    .password-reveal {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fff9fb, #ffe8f0);
+      color: #d91f67;
+      font-size: clamp(27px, 9vw, 32px);
+      font-weight: 900;
+      letter-spacing: 6px;
+      user-select: none;
+    }
+
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    #scratchCanvas:active {
+      cursor: grabbing;
+    }
+
+    .scratch-text {
+      margin: 14px 0 0;
+      color: #9c8790;
+      font-size: 12.5px;
+    }
+
+    .scratch-text b {
+      color: var(--pink-dark);
+    }
+
+    /* COUNTDOWN */
+    #countdownOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at center, #33212a, #120b0f 72%);
+      color: #fff;
+      text-align: center;
+    }
+
+    .count-heart {
+      width: 76px;
+      height: 76px;
+      margin-bottom: 16px;
+      animation: heartBeat .9s infinite;
+    }
+
+    .count-heart img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    #countdownNumber {
+      margin: 0;
+      font-size: clamp(74px, 20vw, 112px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -4px;
+      text-shadow: 0 0 35px rgba(255, 94, 153, .35);
+    }
+
+    #countdownOverlay p {
+      margin: 18px 0 0;
+      color: rgba(255,255,255,.78);
+      font-size: 16px;
+    }
+
+    @keyframes heartBeat {
+      0%,100% { transform: scale(1); }
+      45% { transform: scale(1.18); }
+    }
+
+    @media (max-width: 520px) {
+      .page { padding: 16px; }
+
+      .login-card {
+        padding: 28px 20px 23px;
+        border-radius: 26px;
+      }
+
+      .art {
+        width: 84px;
+        height: 84px;
+        border-radius: 24px;
+      }
+
+      .password-input,
+      .submit-btn {
+        height: 54px;
+      }
+    }
+
+    @media (max-height: 680px) {
+      body { overflow: auto; }
+      .page { padding-block: 18px; }
+      .login-card { padding-top: 22px; padding-bottom: 20px; }
+      .art { width: 72px; height: 72px; }
+      .subtitle { margin-bottom: 17px; }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="page">
+    <span class="blob one"></span>
+    <span class="blob two"></span>
 
-    <!-- Nút mở modal -->
-    <div class="main_container">
-
-        <button
-            type="button"
-            class="btn btn-outline-primary btn-lg"
-            data-toggle="modal"
-            data-target="#modalHoiNgaySinh"
-        >
-            Click vào đi em
-        </button>
-
-    </div>
-
-
-    <!-- =========================
-         MODAL NHẬP MẬT KHẨU
-    ========================== -->
-
-    <div
-        class="modal fade"
-        id="modalHoiNgaySinh"
-        tabindex="-1"
-    >
-
-        <div class="modal-dialog modal-dialog-centered">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h5 class="modal-title">
-                        Nhập Mật Khẩu
-                    </h5>
-
-                    <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                    >
-                        &times;
-                    </button>
-
-                </div>
-
-
-                <div class="modal-body">
-
-                    <div class="text-center">
-
-                        <img
-                            id="figureImage"
-                            src="love.gif"
-                            alt="Love"
-                        >
-
-                    </div>
-
-                    <input
-                        type="text"
-                        id="nhapngaysinh"
-                        class="form-control"
-                        placeholder="Mk là ngày sinh của em á VD: 01012000"
-                        autocomplete="off"
-                        inputmode="numeric"
-                    >
-
-                </div>
-
-
-                <div class="modal-footer">
-
-                    <button
-                        type="button"
-                        onclick="checkValid()"
-                        class="btn btn-success"
-                    >
-                        Tiếp tục
-                    </button>
-
-                </div>
-
-            </div>
+    <section class="login-card" aria-labelledby="loginTitle">
+      <div class="art-wrap">
+        <div class="art">
+          <img src="love.gif" alt="Love" onerror="this.style.display='none';" />
         </div>
-    </div>
+      </div>
 
+      <h1 class="title" id="loginTitle">Nhập mật khẩu</h1>
+      <p class="subtitle">Nhập mật khẩu bí mật để mở món quà dành riêng cho em ✨</p>
 
-    <!-- =========================
-         POPUP CÀO GỢI Ý
-    ========================== -->
+      <form id="passwordForm" novalidate>
+        <label class="field-label" for="passwordInput">Mật khẩu</label>
 
-    <div id="hintOverlay">
+        <div class="input-wrap">
+          <input
+            id="passwordInput"
+            class="password-input"
+            type="password"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="8"
+            placeholder="Nhập 8 chữ số..."
+            aria-describedby="message"
+          />
 
-        <div class="hint-card">
-
-            <button
-                class="hint-close"
-                onclick="closeHint()"
-            >
-                ×
-            </button>
-
-            <div class="hint-title">
-                🎁 Gợi ý mật khẩu
-            </div>
-
-            <div class="scratch-wrapper">
-
-                <!-- MẬT KHẨU THẬT -->
-                <div class="password-reveal">
-                    26082004
-                </div>
-
-                <!-- LỚP PHỦ ĐỂ CÀO -->
-                <canvas id="scratchCanvas"></canvas>
-
-            </div>
-
-            <div class="scratch-text">
-                👉 <span>Cào lớp màu hồng</span> để xem mật khẩu
-            </div>
-
+          <button class="toggle-password" id="togglePassword" type="button" aria-label="Hiện mật khẩu" title="Hiện / ẩn mật khẩu">
+            <span id="eyeIcon">👁</span>
+          </button>
         </div>
 
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+
+        <button class="submit-btn" type="submit">Mở khóa</button>
+      </form>
+
+      <p class="footer-note">🔒 Nội dung được khóa bằng ngày sinh nhật của em.</p>
+    </section>
+  </main>
+
+  <div id="hintOverlay" aria-hidden="true">
+    <div class="hint-card" role="dialog" aria-modal="true" aria-labelledby="hintTitle">
+      <button class="hint-close" id="closeHint" type="button" aria-label="Đóng">×</button>
+
+      <div class="hint-icon">🎁</div>
+      <h2 class="hint-title" id="hintTitle">Gợi ý mật khẩu</h2>
+      <p class="hint-desc">Cào lớp màu hồng bên dưới để khám phá mật khẩu.</p>
+
+      <div class="scratch-wrapper">
+        <div class="password-reveal">26082004</div>
+        <canvas id="scratchCanvas"></canvas>
+      </div>
+
+      <p class="scratch-text">👉 <b>Cào bằng chuột hoặc ngón tay</b> để xem</p>
     </div>
+  </div>
 
+  <script>
+    const CORRECT_PASSWORD = "26082004";
+    const NEXT_PAGE = "demnguoc.html";
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    const form = document.getElementById("passwordForm");
+    const input = document.getElementById("passwordInput");
+    const message = document.getElementById("message");
+    const togglePassword = document.getElementById("togglePassword");
+    const eyeIcon = document.getElementById("eyeIcon");
+    const hintOverlay = document.getElementById("hintOverlay");
+    const closeHintButton = document.getElementById("closeHint");
 
-    <!-- Popper -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    window.addEventListener("load", () => {
+      setTimeout(() => input.focus(), 250);
+    });
 
-    <!-- Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/g, "").slice(0, 8);
+      input.classList.remove("error");
+      message.textContent = "";
+    });
 
+    togglePassword.addEventListener("click", () => {
+      const hidden = input.type === "password";
+      input.type = hidden ? "text" : "password";
+      eyeIcon.textContent = hidden ? "🙈" : "👁";
+      togglePassword.setAttribute("aria-label", hidden ? "Ẩn mật khẩu" : "Hiện mật khẩu");
+      input.focus();
+    });
 
-    <script>
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      checkPassword();
+    });
 
-        /* =========================
-           KIỂM TRA MẬT KHẨU
-        ========================== */
+    function checkPassword() {
+      const value = input.value.trim();
 
-        function checkValid() {
+      if (!value) {
+        showError("Vui lòng nhập mật khẩu trước nhé.");
+        return;
+      }
 
-            const input =
-                document.getElementById("nhapngaysinh");
+      if (value === CORRECT_PASSWORD) {
+        message.style.color = "var(--success)";
+        message.textContent = "Mật khẩu chính xác ✓";
+        input.blur();
+        setTimeout(startCountdown, 350);
+        return;
+      }
 
-            const inputValue =
-                input.value.trim();
+      showError("Mật khẩu chưa đúng. Cào gợi ý để thử lại nhé!");
+      setTimeout(showHint, 350);
+    }
 
+    function showError(text) {
+      message.style.color = "var(--danger)";
+      message.textContent = text;
+      input.classList.remove("error");
+      void input.offsetWidth;
+      input.classList.add("error");
+    }
 
-            if (inputValue === "") {
+    closeHintButton.addEventListener("click", hideHint);
 
-                alert("Vui lòng nhập ngày sinh!");
+    hintOverlay.addEventListener("click", (event) => {
+      if (event.target === hintOverlay) hideHint();
+    });
 
-                return;
-            }
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && hintOverlay.classList.contains("show")) {
+        hideHint();
+      }
+    });
 
+    function showHint() {
+      hintOverlay.classList.add("show");
+      hintOverlay.setAttribute("aria-hidden", "false");
+      setTimeout(initScratchCard, 80);
+    }
 
-            /* ĐÚNG MẬT KHẨU */
-            if (inputValue === "26082004") {
+    function hideHint() {
+      hintOverlay.classList.remove("show");
+      hintOverlay.setAttribute("aria-hidden", "true");
+      setTimeout(() => input.focus(), 120);
+    }
 
-                $("#modalHoiNgaySinh").modal("hide");
+    function initScratchCard() {
+      const canvas = document.getElementById("scratchCanvas");
+      const wrapper = document.querySelector(".scratch-wrapper");
+      const ratio = Math.max(1, window.devicePixelRatio || 1);
+      const width = wrapper.clientWidth;
+      const height = wrapper.clientHeight;
 
-                startCountdown();
+      canvas.style.opacity = "1";
+      canvas.style.pointerEvents = "auto";
+      canvas.style.transition = "none";
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
 
-            }
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-            /* SAI MẬT KHẨU */
-            else {
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, "#ff8ab5");
+      gradient.addColorStop(.5, "#ff4f91");
+      gradient.addColorStop(1, "#e92f76");
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
 
-                showHint();
+      ctx.fillStyle = "rgba(255,255,255,.94)";
+      ctx.font = "800 16px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("CÀO ĐỂ XEM", width / 2, height / 2);
 
-            }
+      ctx.globalCompositeOperation = "destination-out";
+      let scratching = false;
+      let lastPoint = null;
+
+      const getPoint = (event) => {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top
+        };
+      };
+
+      const erase = (event) => {
+        if (!scratching) return;
+        event.preventDefault();
+        const point = getPoint(event);
+
+        ctx.lineWidth = 34;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        if (lastPoint) {
+          ctx.beginPath();
+          ctx.moveTo(lastPoint.x, lastPoint.y);
+          ctx.lineTo(point.x, point.y);
+          ctx.stroke();
         }
 
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 18, 0, Math.PI * 2);
+        ctx.fill();
+        lastPoint = point;
+      };
 
-        /* =========================
-           HIỆN POPUP GỢI Ý
-        ========================== */
+      canvas.onpointerdown = (event) => {
+        scratching = true;
+        lastPoint = getPoint(event);
+        try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
+        erase(event);
+      };
 
-        function showHint() {
+      canvas.onpointermove = erase;
 
-            const hintOverlay =
-                document.getElementById("hintOverlay");
+      canvas.onpointerup = () => {
+        scratching = false;
+        lastPoint = null;
+        checkScratchPercent(ctx, canvas);
+      };
 
-            hintOverlay.style.display = "flex";
+      canvas.onpointercancel = () => {
+        scratching = false;
+        lastPoint = null;
+      };
+    }
 
-            /* Reset lại thẻ cào mỗi lần mở */
-            setTimeout(function () {
+    function checkScratchPercent(ctx, canvas) {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels = imageData.data;
+      let transparent = 0;
 
-                initScratchCard();
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] < 50) transparent++;
+      }
 
-            }, 100);
+      const percent = (transparent / (pixels.length / 4)) * 100;
 
+      if (percent > 48) {
+        canvas.style.transition = "opacity .5s ease";
+        canvas.style.opacity = "0";
+        canvas.style.pointerEvents = "none";
+      }
+    }
+
+    function startCountdown() {
+      if (document.getElementById("countdownOverlay")) return;
+
+      const overlay = document.createElement("div");
+      overlay.id = "countdownOverlay";
+      overlay.innerHTML = `
+        <div class="count-heart"><img src="love.gif" alt="Love" /></div>
+        <h1 id="countdownNumber">10</h1>
+        <p>Chuẩn bị đón điều bất ngờ nào...</p>
+      `;
+      document.body.appendChild(overlay);
+
+      let count = 10;
+      const number = document.getElementById("countdownNumber");
+
+      const timer = setInterval(() => {
+        count--;
+        number.textContent = count;
+
+        if (count <= 0) {
+          clearInterval(timer);
+          window.location.href = NEXT_PAGE;
         }
-
-
-        /* =========================
-           ĐÓNG POPUP
-        ========================== */
-
-        function closeHint() {
-
-            document.getElementById(
-                "hintOverlay"
-            ).style.display = "none";
-
-            const input =
-                document.getElementById("nhapngaysinh");
-
-            input.value = "";
-
-            setTimeout(function () {
-
-                input.focus();
-
-            }, 200);
-        }
-
-
-        /* =========================
-           TẠO THẺ CÀO
-        ========================== */
-
-        function initScratchCard() {
-
-            const canvas =
-                document.getElementById("scratchCanvas");
-
-            const wrapper =
-                document.querySelector(".scratch-wrapper");
-
-            /*
-                Tăng độ phân giải canvas
-                để không bị mờ trên điện thoại
-            */
-
-            const ratio =
-                window.devicePixelRatio || 1;
-
-            const width =
-                wrapper.clientWidth;
-
-            const height =
-                wrapper.clientHeight;
-
-
-            canvas.width =
-                width * ratio;
-
-            canvas.height =
-                height * ratio;
-
-
-            canvas.style.width =
-                width + "px";
-
-            canvas.style.height =
-                height + "px";
-
-
-            const ctx =
-                canvas.getContext("2d");
-
-
-            ctx.setTransform(
-                ratio,
-                0,
-                0,
-                ratio,
-                0,
-                0
-            );
-
-
-            /*
-                Nền thẻ cào màu hồng
-            */
-
-            const gradient =
-                ctx.createLinearGradient(
-                    0,
-                    0,
-                    width,
-                    height
-                );
-
-
-            gradient.addColorStop(
-                0,
-                "#ff75a8"
-            );
-
-            gradient.addColorStop(
-                0.5,
-                "#ff2e78"
-            );
-
-            gradient.addColorStop(
-                1,
-                "#ec0b59"
-            );
-
-
-            ctx.fillStyle = gradient;
-
-            ctx.fillRect(
-                0,
-                0,
-                width,
-                height
-            );
-
-
-            /*
-                Chữ "cào để xem"
-            */
-
-            ctx.globalCompositeOperation =
-                "source-over";
-
-            ctx.fillStyle =
-                "#ffffff";
-
-            ctx.font =
-                "bold 16px Arial";
-
-            ctx.textAlign =
-                "center";
-
-            ctx.textBaseline =
-                "middle";
-
-            ctx.fillText(
-                "cào để xem",
-                width / 2,
-                height / 2
-            );
-
-
-            /*
-                Bắt đầu chế độ xóa
-            */
-
-            ctx.globalCompositeOperation =
-                "destination-out";
-
-
-            let scratching = false;
-
-
-            function getPosition(e) {
-
-                const rect =
-                    canvas.getBoundingClientRect();
-
-                return {
-
-                    x:
-                        e.clientX -
-                        rect.left,
-
-                    y:
-                        e.clientY -
-                        rect.top
-
-                };
-            }
-
-
-            function scratch(e) {
-
-                if (!scratching) {
-                    return;
-                }
-
-                e.preventDefault();
-
-                const pos =
-                    getPosition(e);
-
-
-                /*
-                    Kích thước đầu cào
-                */
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    pos.x,
-                    pos.y,
-                    22,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-            }
-
-
-            canvas.onpointerdown =
-                function (e) {
-
-                    scratching = true;
-
-                    canvas.setPointerCapture(
-                        e.pointerId
-                    );
-
-                    scratch(e);
-                };
-
-
-            canvas.onpointermove =
-                function (e) {
-
-                    scratch(e);
-
-                };
-
-
-            canvas.onpointerup =
-                function () {
-
-                    scratching = false;
-
-                    checkScratchPercent();
-
-                };
-
-
-            canvas.onpointercancel =
-                function () {
-
-                    scratching = false;
-
-                };
-
-
-            /*
-                Kiểm tra người dùng
-                đã cào đủ hay chưa
-            */
-
-            function checkScratchPercent() {
-
-                /*
-                    Lấy pixel thật của canvas.
-                */
-
-                const imageData =
-                    ctx.getImageData(
-                        0,
-                        0,
-                        canvas.width,
-                        canvas.height
-                    );
-
-
-                const pixels =
-                    imageData.data;
-
-
-                let transparentPixels = 0;
-
-                let totalPixels =
-                    pixels.length / 4;
-
-
-                /*
-                    Kiểm tra alpha
-                */
-
-                for (
-                    let i = 3;
-                    i < pixels.length;
-                    i += 4
-                ) {
-
-                    if (pixels[i] < 50) {
-
-                        transparentPixels++;
-
-                    }
-                }
-
-
-                const scratchedPercent =
-                    (
-                        transparentPixels /
-                        totalPixels
-                    ) * 100;
-
-
-                /*
-                    Cào trên 55%
-                    => mở hết thẻ
-                */
-
-                if (scratchedPercent > 55) {
-
-                    canvas.style.transition =
-                        "opacity 0.5s";
-
-                    canvas.style.opacity =
-                        "0";
-
-
-                    /*
-                        Sau khi mở hết,
-                        khóa không cho cào nữa
-                    */
-
-                    canvas.style.pointerEvents =
-                        "none";
-                }
-            }
-        }
-
-
-        /* =========================
-           COUNTDOWN KHI NHẬP ĐÚNG
-        ========================== */
-
-        function startCountdown() {
-
-            const countdownHTML = `
-
-                <div id="countdownOverlay">
-
-                    <h1>10</h1>
-
-                    <p>
-                        Chuẩn bị đón điều bất ngờ nào... ❤️
-                    </p>
-
-                </div>
-
-            `;
-
-
-            $("body").append(
-                countdownHTML
-            );
-
-
-            let count = 10;
-
-            const countdownElement =
-                $("#countdownOverlay h1");
-
-
-            const timer =
-                setInterval(
-                    function () {
-
-                        count--;
-
-                        countdownElement.text(
-                            count
-                        );
-
-
-                        if (count <= 0) {
-
-                            clearInterval(
-                                timer
-                            );
-
-
-                            $("#countdownOverlay")
-                                .fadeOut(
-                                    800,
-                                    function () {
-
-                                        window.location.href =
-                                            "demnguoc.html";
-
-                                    }
-                                );
-                        }
-
-                    },
-                    1000
-                );
-        }
-
-
-        /* =========================
-           NHẤN ENTER
-        ========================== */
-
-        document
-            .getElementById("nhapngaysinh")
-            .addEventListener(
-                "keydown",
-                function (event) {
-
-                    if (
-                        event.key === "Enter"
-                    ) {
-
-                        checkValid();
-
-                    }
-
-                }
-            );
-
-    </script>
-
+      }, 1000);
+    }
+  </script>
 </body>
-
 </html>
