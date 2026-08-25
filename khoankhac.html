@@ -1,11 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="vi">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
+
     name="viewport"
+
     content="width=device-width, initial-scale=1, viewport-fit=cover"
+
   >
 
   <meta name="theme-color" content="#ad768f">
@@ -13,91 +19,145 @@
   <title>Khoảnh Khắc</title>
 
   <style>
+
     /* =========================================
+
        RESET
+
     ========================================= */
 
     * {
+
       box-sizing: border-box;
+
       margin: 0;
+
       padding: 0;
+
     }
 
     :root {
+
       --pink: #ff477e;
+
       --pink-light: #ff8faf;
+
       --white: #ffffff;
+
     }
 
     html {
+
       -webkit-text-size-adjust: 100%;
+
     }
 
     body {
+
       width: 100%;
 
       min-height: 100vh;
+
       min-height: 100dvh;
 
       font-family:
+
         -apple-system,
+
         BlinkMacSystemFont,
+
         "Segoe UI",
+
         Roboto,
+
         Arial,
+
         sans-serif;
 
       display: flex;
+
       justify-content: center;
+
       align-items: center;
 
       padding:
+
         calc(18px + env(safe-area-inset-top))
+
         calc(12px + env(safe-area-inset-right))
+
         calc(18px + env(safe-area-inset-bottom))
+
         calc(12px + env(safe-area-inset-left));
 
       color: #fff;
 
       background:
+
         radial-gradient(
+
           circle at 15% 12%,
+
           rgba(255, 192, 214, 0.8),
+
           transparent 34%
+
         ),
+
         radial-gradient(
+
           circle at 90% 85%,
+
           rgba(183, 157, 255, 0.62),
+
           transparent 38%
+
         ),
+
         linear-gradient(
+
           135deg,
+
           #896272 0%,
+
           #c487a1 48%,
+
           #76658c 100%
+
         );
 
       overflow-x: hidden;
 
       -webkit-tap-highlight-color: transparent;
+
     }
 
     button,
+
     img {
+
       -webkit-tap-highlight-color: transparent;
+
     }
 
     button {
+
       font-family: inherit;
+
     }
 
 
+
     /* =========================================
+
        BACKGROUND DECORATION
+
     ========================================= */
 
     .background-decoration {
+
       position: fixed;
+
       inset: 0;
 
       z-index: -1;
@@ -105,9 +165,11 @@
       overflow: hidden;
 
       pointer-events: none;
+
     }
 
     .blob {
+
       position: absolute;
 
       border-radius: 50%;
@@ -117,40 +179,57 @@
       opacity: 0.4;
 
       animation:
+
         blobMove
+
         10s
+
         ease-in-out
+
         infinite
+
         alternate;
+
     }
 
     .blob-1 {
+
       width: 260px;
+
       height: 260px;
 
       top: -90px;
+
       left: -80px;
 
       background: #ff9fbd;
+
     }
 
     .blob-2 {
+
       width: 320px;
+
       height: 320px;
 
       right: -140px;
+
       bottom: -110px;
 
       background: #b59cff;
 
       animation-delay: -4s;
+
     }
 
     .blob-3 {
+
       width: 180px;
+
       height: 180px;
 
       top: 35%;
+
       left: 40%;
 
       background: #ffd1df;
@@ -158,100 +237,147 @@
       opacity: 0.17;
 
       animation-delay: -7s;
+
     }
 
     @keyframes blobMove {
+
       from {
+
         transform:
+
           translate(0, 0)
+
           scale(1);
+
       }
 
       to {
+
         transform:
+
           translate(30px, 25px)
+
           scale(1.1);
+
       }
+
     }
 
 
+
     /* =========================================
+
        APP
+
     ========================================= */
 
     .app {
+
       width: min(400px, 100%);
+
     }
+
 
 
     /* =========================================
+
        HEADER
+
     ========================================= */
 
     .header {
+
       margin-bottom: 15px;
 
       text-align: center;
+
     }
 
     .header-heart {
+
       width: 46px;
+
       height: 46px;
 
       margin:
+
         0
+
         auto
+
         8px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       border-radius: 50%;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.35);
 
       background:
+
         rgba(255, 255, 255, 0.16);
 
       backdrop-filter: blur(12px);
+
       -webkit-backdrop-filter: blur(12px);
 
       font-size: 22px;
 
       box-shadow:
+
         0 8px 20px
+
         rgba(50, 20, 40, 0.12);
+
     }
 
     .header h1 {
+
       font-size: 24px;
+
       font-weight: 700;
 
       letter-spacing: -0.5px;
 
       text-shadow:
+
         0 2px 10px
+
         rgba(0, 0, 0, 0.12);
+
     }
 
     .header p {
+
       margin-top: 5px;
 
       font-size: 12px;
 
       color:
+
         rgba(255, 255, 255, 0.7);
+
     }
 
 
+
     /* =========================================
+
        GALLERY CARD
+
     ========================================= */
 
     .gallery-card {
+
       width: 100%;
 
       padding: 8px;
@@ -259,41 +385,61 @@
       border-radius: 24px;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.42);
 
       background:
+
         linear-gradient(
+
           145deg,
+
           rgba(255, 255, 255, 0.28),
+
           rgba(255, 255, 255, 0.10)
+
         );
 
       backdrop-filter: blur(20px);
+
       -webkit-backdrop-filter: blur(20px);
 
       box-shadow:
+
         0 20px 50px
+
         rgba(50, 20, 40, 0.2);
+
     }
 
 
+
     /* =========================================
+
        GALLERY
+
     ========================================= */
 
     .gallery {
+
       display: grid;
 
       grid-template-columns:
+
         repeat(3, 1fr);
 
       gap: 6px;
 
       max-height:
+
         min(
+
           500px,
+
           69dvh
+
         );
 
       overflow-y: auto;
@@ -303,29 +449,41 @@
       -webkit-overflow-scrolling: touch;
 
       overscroll-behavior: contain;
+
     }
 
     .gallery::-webkit-scrollbar {
+
       width: 3px;
+
     }
 
     .gallery::-webkit-scrollbar-track {
+
       background: transparent;
+
     }
 
     .gallery::-webkit-scrollbar-thumb {
+
       border-radius: 20px;
 
       background:
+
         rgba(255, 255, 255, 0.45);
+
     }
 
 
+
     /* =========================================
+
        GALLERY ITEM
+
     ========================================= */
 
     .gallery-item {
+
       position: relative;
 
       aspect-ratio: 0.87;
@@ -335,38 +493,51 @@
       border-radius: 12px;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.5);
 
       background:
+
         rgba(255, 255, 255, 0.12);
 
       cursor: pointer;
 
       transition:
+
         transform 0.22s ease,
+
         box-shadow 0.22s ease;
+
     }
 
     .gallery-item img {
+
       display: block;
 
       width: 100%;
+
       height: 100%;
 
       object-fit: cover;
 
       user-select: none;
+
       -webkit-user-select: none;
 
       -webkit-touch-callout: none;
 
       transition:
+
         transform 0.32s ease,
+
         filter 0.32s ease;
+
     }
 
     .gallery-item::after {
+
       content: "";
 
       position: absolute;
@@ -376,43 +547,63 @@
       pointer-events: none;
 
       background:
+
         linear-gradient(
+
           to top,
+
           rgba(80, 30, 55, 0.13),
+
           transparent 50%
+
         );
+
     }
 
     @media (hover: hover) {
 
       .gallery-item:hover {
+
         transform:
+
           translateY(-3px)
+
           scale(1.01);
 
         box-shadow:
+
           0 10px 22px
+
           rgba(50, 20, 40, 0.18);
+
       }
 
       .gallery-item:hover img {
+
         transform: scale(1.07);
 
         filter: brightness(1.05);
+
       }
 
     }
 
     .gallery-item:active {
+
       transform: scale(0.95);
+
     }
 
 
+
     /* =========================================
+
        FOOTER
+
     ========================================= */
 
     .gallery-footer {
+
       padding-top: 9px;
 
       text-align: center;
@@ -420,19 +611,27 @@
       font-size: 11px;
 
       color:
+
         rgba(255, 255, 255, 0.66);
+
     }
 
     .gallery-footer span {
+
       color: #ffd1df;
+
     }
 
 
+
     /* =========================================
+
        LIGHTBOX
+
     ========================================= */
 
     .lightbox {
+
       position: fixed;
 
       inset: 0;
@@ -440,99 +639,147 @@
       z-index: 9999;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       padding:
+
         calc(20px + env(safe-area-inset-top))
+
         calc(10px + env(safe-area-inset-right))
+
         calc(20px + env(safe-area-inset-bottom))
+
         calc(10px + env(safe-area-inset-left));
 
       background:
+
         rgba(29, 16, 26, 0.8);
 
       backdrop-filter: blur(20px);
+
       -webkit-backdrop-filter: blur(20px);
 
       opacity: 0;
+
       visibility: hidden;
 
       transition:
+
         opacity 0.25s ease,
+
         visibility 0.25s ease;
+
     }
 
     .lightbox.active {
+
       opacity: 1;
 
       visibility: visible;
+
     }
 
 
+
     /* =========================================
+
        LIGHTBOX CARD
+
     ========================================= */
 
     .lightbox-card {
+
       position: relative;
 
       width:
+
         min(
+
           410px,
+
           76vw
+
         );
 
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
 
       transform:
+
         translateY(15px)
+
         scale(0.94);
 
       transition:
+
         transform
+
         0.3s
+
         cubic-bezier(.2, .8, .2, 1);
+
     }
 
     .lightbox.active
+
     .lightbox-card {
+
       transform:
+
         translateY(0)
+
         scale(1);
+
     }
 
 
+
     /* =========================================
+
        PHOTO AREA
+
     ========================================= */
 
     .photo-area {
+
       position: relative;
 
       width: 100%;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       overflow: visible;
+
     }
 
 
+
     /* =========================================
+
        PHOTO BOX
+
     ========================================= */
 
     .photo-box {
+
       position: relative;
 
       width: 100%;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       padding: 5px;
@@ -540,33 +787,45 @@
       border-radius: 19px;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.4);
 
       background:
+
         rgba(255, 255, 255, 0.17);
 
       backdrop-filter: blur(12px);
+
       -webkit-backdrop-filter: blur(12px);
 
       box-shadow:
+
         0 22px 55px
+
         rgba(0, 0, 0, 0.35);
 
       overflow: visible;
+
     }
 
 
+
     /* =========================================
+
        MAIN PHOTO
+
     ========================================= */
 
     .main-photo {
+
       display: block;
 
       width: auto;
 
       max-width: 100%;
+
       max-height: 70dvh;
 
       object-fit: contain;
@@ -574,48 +833,65 @@
       border-radius: 15px;
 
       user-select: none;
+
       -webkit-user-select: none;
 
       -webkit-touch-callout: none;
 
       transition:
+
         opacity 0.14s ease,
+
         transform 0.14s ease;
+
     }
 
     .main-photo.changing {
+
       opacity: 0.35;
 
       transform: scale(0.98);
+
     }
 
 
+
     /* =========================================
+
        COUNTER
+
     ========================================= */
 
     .counter {
+
       position: absolute;
 
       top: 12px;
+
       left: 12px;
 
       z-index: 40;
 
       padding:
+
         5px
+
         10px;
 
       border-radius: 20px;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.2);
 
       background:
+
         rgba(20, 15, 20, 0.42);
 
       backdrop-filter: blur(10px);
+
       -webkit-backdrop-filter: blur(10px);
 
       color: #fff;
@@ -623,22 +899,33 @@
       font-size: 11px;
 
       pointer-events: none;
+
     }
 
 
 
+
+
     /* =========================================
+
        COUNTDOWN REDIRECT
+
     ========================================= */
 
     .redirect-countdown {
+
       position: absolute;
+
       inset: 0;
+
       z-index: 190;
 
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
 
       gap: 8px;
@@ -646,53 +933,79 @@
       border-radius: 15px;
 
       background:
+
         rgba(29, 16, 26, 0.72);
 
       backdrop-filter: blur(12px);
+
       -webkit-backdrop-filter: blur(12px);
 
       color: #ffffff;
 
       opacity: 0;
+
       visibility: hidden;
 
       transition:
+
         opacity 0.25s ease,
+
         visibility 0.25s ease;
 
       pointer-events: none;
+
     }
 
     .redirect-countdown.active {
+
       opacity: 1;
+
       visibility: visible;
+
     }
 
     .redirect-countdown-number {
+
       font-size: 56px;
+
       line-height: 1;
+
       font-weight: 800;
+
     }
 
     .redirect-countdown-text {
+
       font-size: 13px;
+
       color: rgba(255, 255, 255, 0.82);
+
       text-align: center;
+
       padding: 0 18px;
+
     }
 
 
+
     /* =========================================
+
        BUTTON RESET
+
     ========================================= */
 
     .nav,
+
     .close-btn {
+
       padding: 0;
+
       margin: 0;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       border-radius: 50%;
@@ -702,30 +1015,41 @@
       cursor: pointer;
 
       appearance: none;
+
       -webkit-appearance: none;
 
       user-select: none;
+
       -webkit-user-select: none;
 
       -webkit-tap-highlight-color: transparent;
 
       backdrop-filter: blur(12px);
+
       -webkit-backdrop-filter: blur(12px);
 
       transition:
+
         transform 0.18s ease,
-        background 0.18s ease,
+
+        *background* 0.18s ease,
+
         box-shadow 0.18s ease;
+
     }
+
 
 
     /* SVG GIÚP ICON LUÔN THẲNG */
 
     .nav svg,
+
     .close-btn svg {
+
       display: block;
 
       width: 20px;
+
       height: 20px;
 
       fill: none;
@@ -735,17 +1059,23 @@
       stroke-width: 2.3;
 
       stroke-linecap: round;
+
       stroke-linejoin: round;
 
       pointer-events: none;
+
     }
 
 
+
     /* =========================================
+
        NÚT < >
+
     ========================================= */
 
     .nav {
+
       position: absolute;
 
       top: 50%;
@@ -753,111 +1083,161 @@
       z-index: 150;
 
       width: 42px;
+
       height: 42px;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.5);
 
       background:
+
         rgba(35, 25, 32, 0.62);
 
       box-shadow:
+
         0 7px 20px
+
         rgba(0, 0, 0, 0.25);
 
       transform:
+
         translateY(-50%);
+
     }
 
     .prev {
+
       left: -21px;
+
     }
 
     .next {
+
       right: -21px;
+
     }
 
     @media (hover: hover) {
 
       .nav:hover {
+
         background:
+
           rgba(255, 255, 255, 0.27);
 
         box-shadow:
+
           0 8px 24px
+
           rgba(0, 0, 0, 0.28);
+
       }
 
     }
 
     .nav:active {
+
       transform:
+
         translateY(-50%)
+
         scale(0.86);
+
     }
 
 
+
     /* =========================================
+
        CLOSE X
+
     ========================================= */
 
     .close-btn {
+
       position: absolute;
 
       top: 10px;
+
       right: 10px;
 
       z-index: 200;
 
       width: 38px;
+
       height: 38px;
 
       border:
+
         1.5px solid
+
         rgba(255, 255, 255, 0.8);
 
       background:
+
         linear-gradient(
+
           135deg,
+
           #ff356d,
+
           #ed4b7c
+
         );
 
       box-shadow:
+
         0 6px 18px
+
         rgba(80, 15, 40, 0.28);
+
     }
 
     .close-btn svg {
+
       width: 18px;
+
       height: 18px;
 
       stroke-width: 2.5;
+
     }
 
     @media (hover: hover) {
 
       .close-btn:hover {
+
         background: #ff3f76;
 
         box-shadow:
+
           0 8px 22px
+
           rgba(90, 15, 45, 0.35);
+
       }
 
     }
 
     .close-btn:active {
+
       transform: scale(0.86);
+
     }
 
 
+
     /* =========================================
+
        ACTION
+
     ========================================= */
 
     .actions {
+
       position: relative;
 
       width: 100%;
@@ -867,52 +1247,71 @@
       margin-top: 14px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       overflow: visible;
+
     }
 
 
+
     /* =========================================
+
        HEART ZONE
+
     ========================================= */
 
     .heart-zone {
+
       position: relative;
 
       width: 54px;
+
       height: 54px;
 
       overflow: visible;
+
     }
 
 
+
     /* =========================================
+
        HEART BUTTON
+
     ========================================= */
 
     .heart-btn {
+
       position: relative;
 
       z-index: 120;
 
       width: 54px;
+
       height: 54px;
 
       padding: 0;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       border-radius: 50%;
 
       border:
+
         1px solid
+
         rgba(255, 255, 255, 0.48);
 
       background:
+
         rgba(255, 255, 255, 0.16);
 
       color: #ffffff;
@@ -922,90 +1321,137 @@
       cursor: pointer;
 
       appearance: none;
+
       -webkit-appearance: none;
 
       backdrop-filter: blur(12px);
+
       -webkit-backdrop-filter: blur(12px);
 
       box-shadow:
+
         0 7px 22px
+
         rgba(0, 0, 0, 0.16);
 
       transition:
-        background 0.2s ease,
+
+        *background* 0.2s ease,
+
         transform 0.2s ease,
+
         box-shadow 0.2s ease;
+
     }
 
     .heart-btn.liked {
+
       background:
+
         linear-gradient(
+
           135deg,
+
           #ff356d,
+
           #ff759c
+
         );
 
       border-color:
+
         rgba(255, 255, 255, 0.78);
 
       box-shadow:
+
         0 9px 30px
+
         rgba(255, 50, 105, 0.42);
+
     }
 
 
+
     /* =========================================
+
        HEART POP
+
     ========================================= */
 
     .heart-btn.pop {
+
       animation:
+
         heartButtonPop
+
         0.65s
+
         ease;
+
     }
 
     @keyframes heartButtonPop {
 
       0% {
+
         transform: scale(1);
+
       }
 
       18% {
+
         transform: scale(0.68);
+
       }
 
       40% {
+
         transform:
+
           scale(1.48)
+
           rotate(-8deg);
+
       }
 
       58% {
+
         transform:
+
           scale(0.92)
+
           rotate(6deg);
+
       }
 
       76% {
+
         transform: scale(1.15);
+
       }
 
       100% {
+
         transform: scale(1);
+
       }
 
     }
 
 
+
     /* =========================================
+
        FLYING HEARTS
+
     ========================================= */
 
     .flying-heart {
+
       position: absolute;
 
       left: 50%;
+
       top: 50%;
 
       z-index: 80;
@@ -1015,93 +1461,145 @@
       opacity: 0;
 
       color:
+
         var(
+
           --particle-color,
+
           #ff4f83
+
         );
 
       font-size:
+
         var(
+
           --size,
+
           18px
+
         );
 
       text-shadow:
+
         0 2px 6px
+
         rgba(100, 20, 50, 0.22);
 
       animation:
+
         flyingHeart
+
         var(--duration, 1300ms)
+
         cubic-bezier(.15, .75, .25, 1)
+
         forwards;
 
       animation-delay:
+
         var(--delay, 0ms);
+
     }
 
     @keyframes flyingHeart {
 
       0% {
+
         opacity: 0;
 
         transform:
+
           translate(-50%, -50%)
+
           scale(0.2)
+
           rotate(0deg);
+
       }
 
       10% {
+
         opacity: 1;
+
       }
 
       35% {
+
         opacity: 1;
 
         transform:
+
           translate(
+
             calc(-50% + var(--x1)),
+
             calc(-50% + var(--y1))
+
           )
+
           scale(1.15)
+
           rotate(var(--r1));
+
       }
 
       70% {
+
         opacity: 0.95;
 
         transform:
+
           translate(
+
             calc(-50% + var(--x2)),
+
             calc(-50% + var(--y2))
+
           )
+
           scale(1)
+
           rotate(var(--r2));
+
       }
 
       100% {
+
         opacity: 0;
 
         transform:
+
           translate(
+
             calc(-50% + var(--x3)),
+
             calc(-50% + var(--y3))
+
           )
+
           scale(0.7)
+
           rotate(var(--r3));
+
       }
 
     }
 
 
+
     /* =========================================
+
        BIG HEART DOUBLE TAP
+
     ========================================= */
 
     .big-heart {
+
       position: absolute;
 
       left: 50%;
+
       top: 50%;
 
       z-index: 180;
@@ -1115,268 +1613,509 @@
       opacity: 0;
 
       filter:
+
         drop-shadow(
+
           0 5px 12px
+
           rgba(100, 20, 50, 0.3)
+
         );
 
       animation:
+
         bigHeartAnimation
+
         0.9s
+
         ease
+
         forwards;
+
     }
 
     @keyframes bigHeartAnimation {
 
       0% {
+
         opacity: 0;
 
         transform:
+
           translate(-50%, -50%)
+
           scale(0);
+
       }
 
       20% {
+
         opacity: 1;
 
         transform:
+
           translate(-50%, -50%)
+
           scale(1.25);
+
       }
 
       42% {
+
         transform:
+
           translate(-50%, -50%)
+
           scale(0.92);
+
       }
 
       60% {
+
         transform:
+
           translate(-50%, -50%)
+
           scale(1.08);
+
       }
 
       75% {
+
         opacity: 1;
+
       }
 
       100% {
+
         opacity: 0;
 
         transform:
+
           translate(-50%, -70%)
+
           scale(1.18);
+
       }
 
     }
 
 
+
     /* =========================================
+
        SWIPE
+
     ========================================= */
 
     .swipe-text {
+
       margin-top: 7px;
 
       color:
+
         rgba(255, 255, 255, 0.56);
 
       font-size: 10px;
 
       letter-spacing: 0.3px;
+
     }
 
 
+
     /* =========================================
+
        MOBILE
+
     ========================================= */
 
     @media (max-width: 600px) {
 
       .app {
+
         width:
+
           min(
+
             390px,
+
             100%
+
           );
+
       }
 
       .gallery-card {
+
         padding: 7px;
+
       }
 
       .gallery {
+
         gap: 5px;
+
       }
 
       .lightbox-card {
+
         width: 73vw;
 
         max-width: 360px;
+
       }
 
       .main-photo {
+
         max-height: 68dvh;
+
       }
 
       .nav {
+
         width: 38px;
+
         height: 38px;
+
       }
 
       .nav svg {
+
         width: 18px;
+
         height: 18px;
+
       }
 
       .prev {
+
         left: -19px;
+
       }
 
       .next {
+
         right: -19px;
+
       }
 
       .close-btn {
+
         width: 35px;
+
         height: 35px;
 
         top: 8px;
+
         right: 8px;
+
       }
 
       .close-btn svg {
+
         width: 17px;
+
         height: 17px;
+
       }
 
       .heart-zone,
+
       .heart-btn {
+
         width: 50px;
+
         height: 50px;
+
       }
 
       .heart-btn {
+
         font-size: 26px;
+
       }
 
     }
 
 
+
     /* =========================================
+
        SMALL MOBILE
+
     ========================================= */
 
     @media (max-width: 360px) {
 
       .header h1 {
+
         font-size: 21px;
+
       }
 
       .lightbox-card {
+
         width: 70vw;
+
       }
 
       .nav {
+
         width: 34px;
+
         height: 34px;
+
       }
 
       .nav svg {
+
         width: 17px;
+
         height: 17px;
+
       }
 
       .prev {
+
         left: -17px;
+
       }
 
       .next {
+
         right: -17px;
+
       }
 
       .close-btn {
+
         width: 33px;
+
         height: 33px;
 
         top: 7px;
+
         right: 7px;
+
       }
 
     }
 
 
+
     /* =========================================
+
        LANDSCAPE
+
     ========================================= */
 
     @media
+
     (orientation: landscape)
+
     and
+
     (max-height: 520px) {
 
       .header {
+
         display: none;
+
       }
 
       .gallery {
+
         max-height: 82dvh;
+
       }
 
       .main-photo {
+
         max-height: 64dvh;
+
       }
 
       .actions {
+
         height: 43px;
 
         margin-top: 5px;
+
       }
 
       .heart-zone,
+
       .heart-btn {
+
         width: 40px;
+
         height: 40px;
+
       }
 
       .heart-btn {
+
         font-size: 21px;
+
       }
 
       .swipe-text {
+
         display: none;
+
       }
 
     }
 
 
+
     /* =========================================
+
        REDUCE MOTION
+
     ========================================= */
 
     @media (prefers-reduced-motion: reduce) {
 
       *,
+
       *::before,
+
       *::after {
+
         animation-duration:
+
           0.01ms !important;
 
         transition-duration:
+
           0.01ms !important;
+
       }
 
     }
 
+
+
+    /* =========================================
+
+       MUSIC UNLOCK
+
+    ========================================= */
+
+    .music-unlock {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 20000;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 24px;
+
+      background: rgba(29, 16, 26, 0.48);
+
+      backdrop-filter: blur(10px);
+
+      -webkit-backdrop-filter: blur(10px);
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+
+    }
+
+    .music-unlock.active {
+
+      opacity: 1;
+
+      visibility: visible;
+
+    }
+
+    .music-unlock-button {
+
+      min-width: 210px;
+
+      min-height: 56px;
+
+      padding: 14px 22px;
+
+      border: 1px solid rgba(255,255,255,0.65);
+
+      border-radius: 999px;
+
+      background: linear-gradient(135deg, #ff356d, #ff759c);
+
+      color: #fff;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.1px;
+
+      box-shadow: 0 12px 34px rgba(80,15,40,0.34);
+
+      cursor: pointer;
+
+      appearance: none;
+
+      -webkit-appearance: none;
+
+    }
+
+    .music-unlock-button:active {
+
+      transform: scale(0.96);
+
+    }
+
+    .music-error-text {
+
+      max-width: 320px;
+
+      padding: 16px 18px;
+
+      border-radius: 18px;
+
+      background: rgba(35, 25, 32, 0.82);
+
+      border: 1px solid rgba(255,255,255,0.35);
+
+      color: #fff;
+
+      font-size: 14px;
+
+      line-height: 1.45;
+
+      text-align: center;
+
+      box-shadow: 0 12px 34px rgba(0,0,0,0.28);
+
+    }
+
   </style>
+
 </head>
 
 <body>
 
 
+
   <!-- ========================================
+
        BACKGROUND
+
   ========================================= -->
 
   <div class="background-decoration">
@@ -1390,11 +2129,15 @@
   </div>
 
 
+
   <!-- ========================================
+
        APP
+
   ========================================= -->
 
   <main class="app">
+
 
 
     <!-- HEADER -->
@@ -1402,129 +2145,185 @@
     <header class="header">
 
       <div class="header-heart">
+
         ♡
+
       </div>
 
       <h1>
+
         Khoảnh Khắc
+
       </h1>
 
       <p>
+
         Những điều nhỏ bé nhưng đáng nhớ
+
       </p>
 
     </header>
 
 
+
     <!-- ========================================
+
          GALLERY
+
     ========================================= -->
 
     <section class="gallery-card">
 
       <div
+
         class="gallery"
+
         id="gallery"
+
       >
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac1.jpg"
+
             alt="Khoảnh khắc 1"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac2.jpg"
+
             alt="Khoảnh khắc 2"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac3.jpg"
+
             alt="Khoảnh khắc 3"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac4.jpg"
+
             alt="Khoảnh khắc 4"
+
             loading="lazy"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac5.jpg"
+
             alt="Khoảnh khắc 5"
+
             loading="lazy"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac6.jpg"
+
             alt="Khoảnh khắc 6"
+
             loading="lazy"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac7.jpg"
+
             alt="Khoảnh khắc 7"
+
             loading="lazy"
+
           >
 
         </div>
 
 
+
         <div class="gallery-item">
 
           <img
+
             src="khoankhac8.jpg"
+
             alt="Khoảnh khắc 8"
+
             loading="lazy"
+
           >
 
         </div>
+
 
 
         <div class="gallery-item">
 
           <img
+
             src="khoankhac9.jpg"
+
             alt="Khoảnh khắc 9"
+
             loading="lazy"
+
           >
 
         </div>
+
 
 
       </div>
+
 
 
       <div class="gallery-footer">
@@ -1540,45 +2339,69 @@
   </main>
 
 
+
   <!-- ========================================
+
        LIGHTBOX
+
   ========================================= -->
 
   <div
+
     class="lightbox"
+
     id="lightbox"
+
   >
 
 
+
     <div
+
       class="lightbox-card"
+
       id="lightboxCard"
+
     >
 
 
+
       <!-- ====================================
+
            PHOTO AREA
+
       ===================================== -->
 
       <div class="photo-area">
 
 
+
         <!-- NÚT TRÁI -->
 
         <button
+
           class="nav prev"
+
           id="prev"
+
           type="button"
+
           aria-label="Ảnh trước"
+
         >
 
           <svg
+
             viewBox="0 0 24 24"
+
             aria-hidden="true"
+
           >
 
             <path
+
               d="M15 18L9 12L15 6"
+
             />
 
           </svg>
@@ -1586,77 +2409,119 @@
         </button>
 
 
+
         <!-- ==================================
+
              PHOTO BOX
+
         =================================== -->
 
         <div
+
           class="photo-box"
+
           id="photoBox"
+
         >
+
 
 
           <!-- COUNTER -->
 
           <div
+
             class="counter"
+
             id="counter"
+
           >
+
             1 / 9
+
           </div>
+
 
 
           <!-- ẢNH LỚN -->
 
           <img
+
             class="main-photo"
+
             id="mainPhoto"
+
             src=""
+
             alt="Ảnh đang xem"
+
           >
+
 
 
           <!-- ĐẾM NGƯỢC CHUYỂN TRANG -->
 
           <div
+
             class="redirect-countdown"
+
             id="redirectCountdown"
+
             aria-live="polite"
+
           >
 
             <div
+
               class="redirect-countdown-number"
+
               id="redirectCountdownNumber"
+
             >
+
               5
+
             </div>
 
             <div class="redirect-countdown-text">
+
               Sắp chuyển sang trang đánh giá...
+
             </div>
 
           </div>
 
 
+
         </div>
+
 
 
         <!-- NÚT PHẢI -->
 
         <button
+
           class="nav next"
+
           id="next"
+
           type="button"
+
           aria-label="Ảnh tiếp theo"
+
         >
 
           <svg
+
             viewBox="0 0 24 24"
+
             aria-hidden="true"
+
           >
 
             <path
+
               d="M9 6L15 12L9 18"
+
             />
 
           </svg>
@@ -1664,32 +2529,47 @@
         </button>
 
 
+
       </div>
 
 
+
       <!-- ====================================
+
            HEART
+
       ===================================== -->
 
       <div class="actions">
 
         <div
+
           class="heart-zone"
+
           id="heartZone"
+
         >
 
           <button
+
             class="heart-btn"
+
             id="heart"
+
             type="button"
+
             aria-label="Yêu thích"
+
           >
+
             ♥
+
           </button>
 
         </div>
 
       </div>
+
 
 
       <div class="swipe-text">
@@ -1699,397 +2579,775 @@
       </div>
 
 
+
     </div>
 
   </div>
 
 
-  <!-- Nhạc nền: tự phát khi vào trang Khoảnh Khắc -->
+
+  <!-- Nhạc nền -->
+
   <audio
+
     id="backgroundMusic"
-    src="suaoisuaoi.mp"
+
     preload="auto"
-    autoplay
+
     loop
+
     playsinline
-  ></audio>
+
+  >
+
+    <!-- Giữ đúng tên bạn yêu cầu; type giúp trình duyệt nhận .mp là MP3/MPEG -->
+
+    <source src="suaoisuaoi.mp" type="audio/mpeg">
+
+    <!-- Dự phòng nếu file thực tế đang có đuôi .mp3 -->
+
+    <source src="suaoisuaoi.mp3" type="audio/mpeg">
+
+  </audio>
+
+  <!-- Chỉ hiện khi trình duyệt chặn autoplay -->
+
+  <div
+
+    class="music-unlock active"
+
+    id="musicUnlock"
+
+    role="button"
+
+    tabindex="0"
+
+    aria-label="Chạm vào màn hình để bắt đầu"
+
+  >
+
+    <div class="music-unlock-button">
+
+      Chạm vào màn hình
+
+    </div>
+
+  </div>
 
   <script>
 
     /* =========================================
-       BACKGROUND MUSIC
+
+       BACKGROUND MUSIC - AUTOPLAY + FALLBACK
+
     ========================================= */
 
     const backgroundMusic =
+
       document.getElementById(
+
         "backgroundMusic"
+
       );
 
-    backgroundMusic.volume = 0.75;
+    const musicUnlock =
 
-    function playBackgroundMusic() {
-      const playPromise = backgroundMusic.play();
+      document.getElementById(
 
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          /*
-            Một số trình duyệt (đặc biệt iPhone/Safari)
-            chặn nhạc tự phát có âm thanh. Nếu bị chặn,
-            nhạc sẽ phát ngay ở lần chạm/click/phím đầu tiên.
-          */
-        });
-      }
+        "musicUnlock"
+
+      );
+
+    backgroundMusic.volume = 0.78;
+
+    let musicStarted = false;
+
+    let musicLoadFailed = false;
+
+    function hideMusicUnlock() {
+
+      musicUnlock.classList.remove("active");
+
     }
 
-    ["pointerdown", "touchstart", "click", "keydown"].forEach(
-      (eventName) => {
-        document.addEventListener(
-          eventName,
-          playBackgroundMusic,
-          { once: true, passive: true }
-        );
+    function showMusicUnlock() {
+
+      if (!musicStarted && !musicLoadFailed) {
+
+        musicUnlock.classList.add("active");
+
       }
+
+    }
+
+    async function playBackgroundMusic(showFallback = true) {
+
+      if (musicStarted) {
+
+        return true;
+
+      }
+
+      try {
+
+        backgroundMusic.muted = false;
+
+        backgroundMusic.volume = 0.78;
+
+        await backgroundMusic.play();
+
+        musicStarted = true;
+
+        hideMusicUnlock();
+
+        return true;
+
+      }
+
+      catch (error) {
+
+        if (showFallback) {
+
+          showMusicUnlock();
+
+        }
+
+        return false;
+
+      }
+
+    }
+
+    function showMusicFileError() {
+
+      musicLoadFailed = true;
+
+      musicUnlock.classList.add("active");
+
+      musicUnlock.innerHTML = `
+
+        <div class="music-error-text">
+
+          Không tải được nhạc.<br>
+
+          Hãy kiểm tra file <b>suaoisuaoi.mp</b> hoặc <b>suaoisuaoi.mp3</b>
+
+          có nằm cùng thư mục với <b>khoankhac.html</b> hay không.
+
+        </div>
+
+      `;
+
+    }
+
+    async function unlockMusicFromScreen(event) {
+
+      if (event) {
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+      }
+
+      // Lần chạm đầu tiên mới phát nhạc.
+      await playBackgroundMusic(false);
+
+      // Sau lần chạm đầu tiên mới cho ảnh tự chạy.
+      if (!isRedirectCounting) {
+        startAutoSlide();
+      }
+
+    }
+
+    /* Chạm vào bất kỳ vị trí nào trên lớp màn hình để bắt đầu nhạc. */
+
+    musicUnlock.addEventListener(
+
+      "pointerdown",
+
+      unlockMusicFromScreen
+
+    );
+
+    musicUnlock.addEventListener(
+
+      "keydown",
+
+      (event) => {
+
+        if (event.key === "Enter" || event.key === " ") {
+
+          unlockMusicFromScreen(event);
+
+        }
+
+      }
+
+    );
+
+    backgroundMusic.addEventListener(
+
+      "playing",
+
+      () => {
+
+        musicStarted = true;
+
+        hideMusicUnlock();
+
+      }
+
+    );
+
+    backgroundMusic.addEventListener(
+
+      "error",
+
+      () => {
+
+        if (backgroundMusic.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+
+          showMusicFileError();
+
+        }
+
+      }
+
     );
 
     /* =========================================
+
        ELEMENTS
+
     ========================================= */
 
     const images =
+
       [
+
         ...document.querySelectorAll(
+
           ".gallery-item img"
+
         )
+
       ];
 
 
+
     const lightbox =
+
       document.getElementById(
+
         "lightbox"
+
       );
+
 
 
     const lightboxCard =
+
       document.getElementById(
+
         "lightboxCard"
+
       );
+
 
 
     const photoBox =
+
       document.getElementById(
+
         "photoBox"
+
       );
+
 
 
     const mainPhoto =
+
       document.getElementById(
+
         "mainPhoto"
+
       );
+
 
 
     const counter =
+
       document.getElementById(
+
         "counter"
+
       );
+
 
 
     const prevBtn =
+
       document.getElementById(
+
         "prev"
+
       );
+
 
 
     const nextBtn =
+
       document.getElementById(
+
         "next"
+
       );
+
 
 
     const heart =
+
       document.getElementById(
+
         "heart"
+
       );
+
 
 
     const heartZone =
+
       document.getElementById(
+
         "heartZone"
+
       );
+
 
 
     const redirectCountdown =
+
       document.getElementById(
+
         "redirectCountdown"
+
       );
+
 
 
     const redirectCountdownNumber =
+
       document.getElementById(
+
         "redirectCountdownNumber"
+
       );
+
 
 
     let currentIndex = 0;
 
     /* =========================================
+
        AUTO SLIDESHOW
+
     ========================================= */
 
     const AUTO_SLIDE_DELAY = 3000;
+
     const REDIRECT_DELAY = 5;
 
     let autoSlideTimer = null;
+
     let redirectTimer = null;
+
     let redirectSeconds = REDIRECT_DELAY;
+
     let isRedirectCounting = false;
 
     function stopAutoSlide() {
+
       if (autoSlideTimer) {
+
         clearInterval(autoSlideTimer);
+
         autoSlideTimer = null;
+
       }
+
     }
 
     function stopRedirectCountdown() {
+
       if (redirectTimer) {
+
         clearInterval(redirectTimer);
+
         redirectTimer = null;
+
       }
 
       isRedirectCounting = false;
+
       redirectSeconds = REDIRECT_DELAY;
 
       redirectCountdown
+
         .classList
+
         .remove("active");
 
       redirectCountdownNumber.textContent =
+
         REDIRECT_DELAY;
+
     }
 
     function startRedirectCountdown() {
+
       if (isRedirectCounting) {
+
         return;
+
       }
 
       stopAutoSlide();
 
       isRedirectCounting = true;
+
       redirectSeconds = REDIRECT_DELAY;
 
       redirectCountdownNumber.textContent =
+
         redirectSeconds;
 
       redirectCountdown
+
         .classList
+
         .add("active");
 
       redirectTimer = setInterval(
+
         () => {
+
           redirectSeconds -= 1;
 
           if (redirectSeconds <= 0) {
+
             clearInterval(redirectTimer);
+
             redirectTimer = null;
 
             window.location.href =
+
               "danhgia.html";
 
             return;
+
           }
 
           redirectCountdownNumber.textContent =
+
             redirectSeconds;
+
         },
+
         1000
+
       );
+
     }
 
     function startAutoSlide() {
+
       stopAutoSlide();
 
       if (isRedirectCounting) {
+
         return;
+
       }
 
       autoSlideTimer = setInterval(
+
         () => {
+
           if (
+
             lightbox.classList.contains("active") &&
+
             !document.hidden
+
           ) {
 
             if (
+
               currentIndex ===
+
               images.length - 1
+
             ) {
+
               startRedirectCountdown();
+
             }
 
             else {
+
               nextPhoto(false);
+
             }
 
           }
+
         },
+
         AUTO_SLIDE_DELAY
+
       );
+
     }
 
     function restartAutoSlide() {
+
       stopRedirectCountdown();
 
       if (lightbox.classList.contains("active")) {
+
         startAutoSlide();
+
       }
+
     }
 
 
+
     const likedImages =
+
       new Set();
 
 
+
     /* =========================================
+
        MỞ ẢNH
+
     ========================================= */
 
     images.forEach(
+
       (img, index) => {
 
         img.parentElement
+
           .addEventListener(
+
             "click",
+
             () => {
 
               currentIndex =
+
                 index;
 
 
+
               updatePhoto(
+
                 false
+
               );
 
 
+
               lightbox
+
                 .classList
+
                 .add(
+
                   "active"
+
                 );
 
 
+
               document.body
+
                 .style
+
                 .overflow =
+
                 "hidden";
 
               startAutoSlide();
 
             }
+
           );
 
       }
+
     );
 
 
+
     /* =========================================
+
        UPDATE PHOTO
+
     ========================================= */
 
     function updatePhoto(
+
       animate = true
+
     ) {
 
       if (animate) {
 
         mainPhoto
+
           .classList
+
           .add(
+
             "changing"
+
           );
 
       }
 
 
+
       setTimeout(
+
         () => {
 
           mainPhoto.src =
+
             images[
+
               currentIndex
+
             ].src;
 
 
+
           mainPhoto.alt =
+
             images[
+
               currentIndex
+
             ].alt;
 
 
+
           counter.textContent =
+
             `${
+
               currentIndex + 1
+
             } / ${images.length}`;
+
 
 
           updateHeart();
 
 
+
           mainPhoto
+
             .classList
+
             .remove(
+
               "changing"
+
             );
 
         },
 
         animate
+
           ? 90
+
           : 0
+
       );
 
     }
 
 
+
     /* =========================================
+
        NEXT
+
     ========================================= */
 
     function nextPhoto(
+
       restartTimer = true
+
     ) {
 
       currentIndex =
+
         (
+
           currentIndex +
+
           1
+
         )
+
         %
+
         images.length;
+
 
 
       updatePhoto();
 
       if (restartTimer) {
+
         restartAutoSlide();
+
       }
 
     }
 
 
+
     /* =========================================
+
        PREVIOUS
+
     ========================================= */
 
     function prevPhoto() {
 
       currentIndex =
+
         (
+
           currentIndex -
+
           1 +
+
           images.length
+
         )
+
         %
+
         images.length;
+
 
 
       updatePhoto();
@@ -2099,12 +3357,17 @@
     }
 
 
+
     /* =========================================
+
        BUTTON NEXT
+
     ========================================= */
 
     nextBtn.addEventListener(
+
       "click",
+
       (event) => {
 
         event.stopPropagation();
@@ -2112,15 +3375,21 @@
         nextPhoto();
 
       }
+
     );
 
 
+
     /* =========================================
+
        BUTTON PREVIOUS
+
     ========================================= */
 
     prevBtn.addEventListener(
+
       "click",
+
       (event) => {
 
         event.stopPropagation();
@@ -2128,44 +3397,65 @@
         prevPhoto();
 
       }
+
     );
 
 
+
     /* =========================================
+
        CLOSE LIGHTBOX
+
     ========================================= */
 
     function closeLightbox() {
 
       lightbox
+
         .classList
+
         .remove(
+
           "active"
+
         );
 
 
+
       document.body
+
         .style
+
         .overflow =
+
         "";
 
       stopAutoSlide();
+
       stopRedirectCountdown();
 
     }
 
 
+
     /* =========================================
+
        CLICK BACKGROUND - KHÔNG ĐÓNG LIGHTBOX
+
     ========================================= */
 
     lightbox.addEventListener(
+
       "click",
+
       (event) => {
 
         if (
+
           event.target ===
+
           lightbox
+
         ) {
 
           event.stopPropagation();
@@ -2173,53 +3463,81 @@
         }
 
       }
+
     );
 
 
+
     /* =========================================
+
        HEART STATE
+
     ========================================= */
 
     function updateHeart() {
 
       heart
+
         .classList
+
         .toggle(
+
           "liked",
+
           likedImages.has(
+
             currentIndex
+
           )
+
         );
 
     }
 
 
+
     /* =========================================
+
        HEART CLICK
+
     ========================================= */
 
     heart.addEventListener(
+
       "click",
+
       (event) => {
 
         event.stopPropagation();
 
 
+
         if (
+
           likedImages.has(
+
             currentIndex
+
           )
+
         ) {
 
           likedImages.delete(
+
             currentIndex
+
           );
 
 
+
           heart
+
             .classList
+
             .remove(
+
               "liked"
+
             );
 
         }
@@ -2227,15 +3545,23 @@
         else {
 
           likedImages.add(
+
             currentIndex
+
           );
 
 
+
           heart
+
             .classList
+
             .add(
+
               "liked"
+
             );
+
 
 
           createHeartExplosion();
@@ -2243,44 +3569,63 @@
         }
 
 
+
         animateHeartButton();
 
       }
+
     );
 
 
+
     /* =========================================
+
        HEART BUTTON ANIMATION
+
     ========================================= */
 
     function animateHeartButton() {
 
       heart
+
         .classList
+
         .remove(
+
           "pop"
+
         );
+
 
 
       void heart.offsetWidth;
 
 
+
       heart
+
         .classList
+
         .add(
+
           "pop"
+
         );
 
     }
 
 
+
     /* =========================================
+
        HEART EXPLOSION
+
     ========================================= */
 
     function createHeartExplosion() {
 
       const amount = 28;
+
 
 
       const colors = [
@@ -2302,243 +3647,407 @@
       ];
 
 
+
       for (
+
         let i = 0;
+
         i < amount;
+
         i++
+
       ) {
 
         const particle =
+
           document.createElement(
+
             "span"
+
           );
+
 
 
         particle.className =
+
           "flying-heart";
 
 
+
         /*
+
           Tim đặc / rỗng
+
         */
 
         particle.textContent =
+
           Math.random() > 0.18
+
             ? "♥"
+
             : "♡";
 
 
+
         /*
+
           Hướng trái hoặc phải
+
         */
 
         const direction =
+
           Math.random() > 0.5
+
             ? 1
+
             : -1;
 
 
+
         /*
+
           Giai đoạn 1
+
         */
 
         const x1 =
+
           direction *
+
           (
+
             5 +
+
             Math.random() *
+
             30
+
           );
+
 
 
         const y1 =
+
           -(
+
             15 +
+
             Math.random() *
+
             35
+
           );
 
 
+
         /*
+
           Giai đoạn 2
+
         */
 
         const x2 =
+
           direction *
+
           (
+
             25 +
+
             Math.random() *
+
             95
+
           );
+
 
 
         const y2 =
+
           -(
+
             80 +
+
             Math.random() *
+
             105
+
           );
+
 
 
         /*
+
           Giai đoạn cuối
+
         */
 
         const x3 =
+
           direction *
+
           (
+
             35 +
+
             Math.random() *
+
             150
+
           );
+
 
 
         const y3 =
+
           -(
+
             190 +
+
             Math.random() *
+
             230
+
           );
+
 
 
         const rotate1 =
+
           Math.random() *
+
           90 -
+
           45;
 
 
+
         const rotate2 =
+
           Math.random() *
+
           200 -
+
           100;
 
 
+
         const rotate3 =
+
           Math.random() *
+
           360 -
+
           180;
 
 
+
         const size =
+
           11 +
+
           Math.random() *
+
           20;
 
 
+
         const duration =
+
           950 +
+
           Math.random() *
+
           850;
 
 
+
         const delay =
+
           Math.random() *
+
           170;
 
 
+
         particle.style
+
           .setProperty(
+
             "--x1",
+
             `${x1}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--y1",
+
             `${y1}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--x2",
+
             `${x2}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--y2",
+
             `${y2}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--x3",
+
             `${x3}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--y3",
+
             `${y3}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--r1",
+
             `${rotate1}deg`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--r2",
+
             `${rotate2}deg`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--r3",
+
             `${rotate3}deg`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--size",
+
             `${size}px`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--duration",
+
             `${duration}ms`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--delay",
+
             `${delay}ms`
+
           );
 
 
+
         particle.style
+
           .setProperty(
+
             "--particle-color",
 
             colors[
+
               Math.floor(
+
                 Math.random() *
+
                 colors.length
+
               )
+
             ]
+
           );
 
 
+
         heartZone.appendChild(
+
           particle
+
         );
 
 
+
         setTimeout(
+
           () => {
 
             particle.remove();
@@ -2546,8 +4055,11 @@
           },
 
           duration +
+
           delay +
+
           150
+
         );
 
       }
@@ -2555,32 +4067,47 @@
     }
 
 
+
     /* =========================================
+
        BIG HEART
+
     ========================================= */
 
     function createBigHeart() {
 
       const bigHeart =
+
         document.createElement(
+
           "div"
+
         );
 
 
+
       bigHeart.className =
+
         "big-heart";
 
 
+
       bigHeart.textContent =
+
         "♥";
 
 
+
       photoBox.appendChild(
+
         bigHeart
+
       );
 
 
+
       setTimeout(
+
         () => {
 
           bigHeart.remove();
@@ -2588,52 +4115,79 @@
         },
 
         950
+
       );
 
     }
 
 
+
     /* =========================================
+
        DOUBLE TAP MOBILE
+
     ========================================= */
 
     let lastTap = 0;
 
 
+
     mainPhoto.addEventListener(
+
       "touchend",
+
       () => {
 
         const now =
+
           Date.now();
 
 
+
         const difference =
+
           now -
+
           lastTap;
 
 
+
         if (
+
           difference > 0 &&
+
           difference < 280
+
         ) {
 
           if (
+
             !likedImages.has(
+
               currentIndex
+
             )
+
           ) {
 
             likedImages.add(
+
               currentIndex
+
             );
 
 
+
             heart
+
               .classList
+
               .add(
+
                 "liked"
+
               );
+
 
 
             createHeartExplosion();
@@ -2641,7 +4195,9 @@
           }
 
 
+
           createBigHeart();
+
 
 
           animateHeartButton();
@@ -2649,44 +4205,67 @@
         }
 
 
+
         lastTap =
+
           now;
 
       },
 
       {
+
         passive: true
+
       }
+
     );
 
 
+
     /* =========================================
+
        DOUBLE CLICK PC
+
     ========================================= */
 
     mainPhoto.addEventListener(
+
       "dblclick",
+
       (event) => {
 
         event.preventDefault();
 
 
+
         if (
+
           !likedImages.has(
+
             currentIndex
+
           )
+
         ) {
 
           likedImages.add(
+
             currentIndex
+
           );
 
 
+
           heart
+
             .classList
+
             .add(
+
               "liked"
+
             );
+
 
 
           createHeartExplosion();
@@ -2694,17 +4273,23 @@
         }
 
 
+
         createBigHeart();
+
 
 
         animateHeartButton();
 
       }
+
     );
 
 
+
     /* =========================================
+
        SWIPE IOS / ANDROID
+
     ========================================= */
 
     let touchStartX = 0;
@@ -2712,73 +4297,115 @@
     let touchStartY = 0;
 
 
+
     lightboxCard.addEventListener(
+
       "touchstart",
+
       (event) => {
 
         touchStartX =
+
           event
+
             .changedTouches[0]
+
             .clientX;
 
 
+
         touchStartY =
+
           event
+
             .changedTouches[0]
+
             .clientY;
 
       },
 
       {
+
         passive: true
+
       }
+
     );
 
 
+
     lightboxCard.addEventListener(
+
       "touchend",
+
       (event) => {
 
         const touchEndX =
+
           event
+
             .changedTouches[0]
+
             .clientX;
 
 
+
         const touchEndY =
+
           event
+
             .changedTouches[0]
+
             .clientY;
 
 
+
         const diffX =
+
           touchEndX -
+
           touchStartX;
 
 
+
         const diffY =
+
           touchEndY -
+
           touchStartY;
 
 
+
         /*
+
           Chỉ nhận swipe ngang
+
         */
 
         if (
+
           Math.abs(diffX) >
+
           Math.abs(diffY)
+
           &&
+
           Math.abs(diffX) >
+
           45
+
         ) {
 
           /*
+
             Vuốt trái
+
           */
 
           if (
+
             diffX < 0
+
           ) {
 
             nextPhoto();
@@ -2786,7 +4413,9 @@
           }
 
           /*
+
             Vuốt phải
+
           */
 
           else {
@@ -2800,25 +4429,39 @@
       },
 
       {
+
         passive: true
+
       }
+
     );
 
 
+
     /* =========================================
+
        KEYBOARD
+
     ========================================= */
 
     document.addEventListener(
+
       "keydown",
+
       (event) => {
 
         if (
+
           !lightbox
+
             .classList
+
             .contains(
+
               "active"
+
             )
+
         ) {
 
           return;
@@ -2826,9 +4469,13 @@
         }
 
 
+
         if (
+
           event.key ===
+
           "Escape"
+
         ) {
 
           closeLightbox();
@@ -2836,9 +4483,13 @@
         }
 
 
+
         if (
+
           event.key ===
+
           "ArrowLeft"
+
         ) {
 
           prevPhoto();
@@ -2846,9 +4497,13 @@
         }
 
 
+
         if (
+
           event.key ===
+
           "ArrowRight"
+
         ) {
 
           nextPhoto();
@@ -2856,95 +4511,148 @@
         }
 
       }
+
     );
 
 
+
     /* =========================================
+
        PREVENT IMAGE DRAG
+
     ========================================= */
 
     mainPhoto.addEventListener(
+
       "dragstart",
+
       (event) => {
 
         event.preventDefault();
 
       }
+
     );
 
 
+
     /* =========================================
+
        PAUSE AUTO SLIDE WHEN TAB IS HIDDEN
+
     ========================================= */
 
     document.addEventListener(
+
       "visibilitychange",
+
       () => {
+
         if (document.hidden) {
+
           stopAutoSlide();
 
           if (isRedirectCounting) {
+
             stopRedirectCountdown();
+
           }
+
         }
+
         else if (
+
           lightbox.classList.contains("active")
+
         ) {
+
           startAutoSlide();
+
         }
+
       }
+
     );
 
 
+
     /* =========================================
+
        AUTO OPEN LIGHTBOX ON PAGE LOAD
+
     ========================================= */
 
     window.addEventListener(
+
       "load",
+
       () => {
-        playBackgroundMusic();
+
+        /* Trình duyệt cho phép phát âm thanh ổn định nhất sau thao tác người dùng. */
+
+        showMusicUnlock();
 
         currentIndex = 0;
 
         updatePhoto(
+
           false
+
         );
 
         lightbox
+
           .classList
+
           .add(
+
             "active"
+
           );
 
         document.body
+
           .style
+
           .overflow =
+
           "hidden";
 
-        startAutoSlide();
+        // Khi mới mở trang: chỉ hiển thị ảnh đầu tiên, chưa tự chạy.
+        // Slideshow sẽ bắt đầu sau khi người dùng chạm vào màn hình.
+
       }
+
     );
 
 
+
     /* =========================================
+
        PRELOAD IMAGES
+
     ========================================= */
 
     images.forEach(
+
       (image) => {
 
         const preload =
+
           new Image();
 
 
+
         preload.src =
+
           image.src;
 
       }
+
     );
 
   </script>
 
 </body>
+
 </html>
