@@ -1606,32 +1606,6 @@
           </div>
 
 
-          <!-- NÚT X -->
-
-          <button
-            class="close-btn"
-            id="close"
-            type="button"
-            aria-label="Đóng"
-          >
-
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-
-              <path
-                d="
-                  M6 6L18 18
-                  M18 6L6 18
-                "
-              />
-
-            </svg>
-
-          </button>
-
-
           <!-- ẢNH LỚN -->
 
           <img
@@ -1771,12 +1745,6 @@
     const counter =
       document.getElementById(
         "counter"
-      );
-
-
-    const closeBtn =
-      document.getElementById(
-        "close"
       );
 
 
@@ -2142,20 +2110,8 @@
     }
 
 
-    closeBtn.addEventListener(
-      "click",
-      (event) => {
-
-        event.stopPropagation();
-
-        closeLightbox();
-
-      }
-    );
-
-
     /* =========================================
-       CLICK BACKGROUND TO CLOSE
+       CLICK BACKGROUND - KHÔNG ĐÓNG LIGHTBOX
     ========================================= */
 
     lightbox.addEventListener(
@@ -2167,7 +2123,7 @@
           lightbox
         ) {
 
-          closeLightbox();
+          event.stopPropagation();
 
         }
 
