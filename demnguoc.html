@@ -64,6 +64,7 @@
       letter-spacing: 2px;
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
+
       user-select: none;
       -webkit-user-select: none;
     }
@@ -85,17 +86,43 @@
 
 <body>
 
-  <div id="clock">23:00:00</div>
+  <div id="clock">23:56:00</div>
 
   <script>
-    let totalSeconds = 23 * 60 * 60;
+    // Bắt đầu từ 23:56:00
+    let totalSeconds =
+      (23 * 60 * 60) +
+      (56 * 60);
 
     const clock = document.getElementById("clock");
 
+    let timer;
+
     function updateClock() {
-      const hours = Math.floor(totalSeconds / 3600) % 24;
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+
+      // Khi chạy tới 24:00:00
+      if (totalSeconds >= 24 * 60 * 60) {
+
+        clock.textContent = "00:00:00";
+
+        clearInterval(timer);
+
+        // Sau 500ms chuyển sang thoinen.html
+        setTimeout(function () {
+          window.location.href = "thoinen.html";
+        }, 500);
+
+        return;
+      }
+
+      const hours =
+        Math.floor(totalSeconds / 3600) % 24;
+
+      const minutes =
+        Math.floor((totalSeconds % 3600) / 60);
+
+      const seconds =
+        totalSeconds % 60;
 
       const h = String(hours).padStart(2, "0");
       const m = String(minutes).padStart(2, "0");
@@ -103,27 +130,13 @@
 
       clock.textContent = `${h}:${m}:${s}`;
 
-      // Khi tới 00:00:00
-      if (totalSeconds >= 24 * 60 * 60) {
-        clock.textContent = "00:00:00";
-
-        clearInterval(timer);
-
-        // Sau 500ms chuyển sang thoinen.html
-        setTimeout(function() {
-          window.location.href = "thoinen.html";
-        }, 500);
-
-        return;
-      }
-
       totalSeconds++;
     }
 
     updateClock();
 
     // Tốc độ chạy
-    const timer = setInterval(updateClock, 10);
+    timer = setInterval(updateClock, 10);
   </script>
 
 </body>
