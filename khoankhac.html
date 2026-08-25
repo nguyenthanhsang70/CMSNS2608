@@ -1704,7 +1704,52 @@
   </div>
 
 
+  <!-- Nhạc nền: tự phát khi vào trang Khoảnh Khắc -->
+  <audio
+    id="backgroundMusic"
+    src="suaoisuaoi.mp"
+    preload="auto"
+    autoplay
+    loop
+    playsinline
+  ></audio>
+
   <script>
+
+    /* =========================================
+       BACKGROUND MUSIC
+    ========================================= */
+
+    const backgroundMusic =
+      document.getElementById(
+        "backgroundMusic"
+      );
+
+    backgroundMusic.volume = 0.75;
+
+    function playBackgroundMusic() {
+      const playPromise = backgroundMusic.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          /*
+            Một số trình duyệt (đặc biệt iPhone/Safari)
+            chặn nhạc tự phát có âm thanh. Nếu bị chặn,
+            nhạc sẽ phát ngay ở lần chạm/click/phím đầu tiên.
+          */
+        });
+      }
+    }
+
+    ["pointerdown", "touchstart", "click", "keydown"].forEach(
+      (eventName) => {
+        document.addEventListener(
+          eventName,
+          playBackgroundMusic,
+          { once: true, passive: true }
+        );
+      }
+    );
 
     /* =========================================
        ELEMENTS
@@ -2858,6 +2903,8 @@
     window.addEventListener(
       "load",
       () => {
+        playBackgroundMusic();
+
         currentIndex = 0;
 
         updatePhoto(
