@@ -476,6 +476,80 @@
         }
 
         /* =========================
+           PROFILE BUTTON
+        ========================== */
+
+        .profile {
+            color: #4a3550;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 244, 249, .96),
+                    rgba(244, 239, 255, .96)
+                );
+
+            border:
+                1px solid
+                rgba(121, 83, 137, .08);
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    105,
+                    73,
+                    118,
+                    .10
+                );
+        }
+
+        .profile .icon-box {
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff0f6,
+                    #eee7ff
+                );
+
+            color: #8c5f92;
+
+            box-shadow:
+                inset 0 1px 1px
+                rgba(255,255,255,.95),
+                0 8px 18px
+                rgba(102, 71, 119, .09);
+        }
+
+        .profile .icon-box svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .profile .arrow {
+            background: rgba(255,255,255,.76);
+        }
+
+        @media (hover:hover) {
+            .profile:hover {
+                background:
+                    linear-gradient(
+                        135deg,
+                        #fff8fb,
+                        #f7f2ff
+                    );
+
+                box-shadow:
+                    0 16px 35px
+                    rgba(
+                        105,
+                        73,
+                        118,
+                        .15
+                    );
+            }
+        }
+
+        /* =========================
            ICON BOX
         ========================== */
 
@@ -1046,6 +1120,54 @@
 
             </button>
 
+
+            <!-- =====================
+                 PROFILE
+            ====================== -->
+
+            <button
+                class="choice profile"
+                onclick="openProfile()"
+                type="button"
+            >
+
+                <div class="icon-box">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4.5 20c.8-4 3.4-6 7.5-6s6.7 2 7.5 6"></path>
+                    </svg>
+
+                </div>
+
+
+                <div class="choice-text">
+
+                    <span class="choice-title">
+                        Hồ sơ cá nhân của anh
+                    </span>
+
+                    <span class="choice-subtitle">
+                        Xem thêm một chút về anh ở đây
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ›
+                </div>
+
+            </button>
+
         </div>
 
 
@@ -1074,6 +1196,14 @@
 
             window.location.href =
                 "https://nguyenthanhsang70.github.io/Novaris/";
+
+        }
+
+
+        function openProfile() {
+
+            window.location.href =
+                "profile.html";
 
         }
 
