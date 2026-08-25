@@ -2031,6 +2031,9 @@
       visibility: hidden;
 
       transition: opacity 0.22s ease, visibility 0.22s ease;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
 
     }
 
@@ -2071,6 +2074,9 @@
       appearance: none;
 
       -webkit-appearance: none;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      pointer-events: auto;
 
     }
 
@@ -2618,19 +2624,13 @@
 
     id="musicUnlock"
 
-    role="button"
-
-    tabindex="0"
-
     aria-label="Chạm vào màn hình để bắt đầu"
 
   >
 
-    <div class="music-unlock-button">
-
+    <button class="music-unlock-button" id="musicUnlockButton" type="button">
       Chạm vào màn hình
-
-    </div>
+    </button>
 
   </div>
 
@@ -2656,6 +2656,11 @@
 
         "musicUnlock"
 
+      );
+
+    const musicUnlockButton =
+      document.getElementById(
+        "musicUnlockButton"
       );
 
     backgroundMusic.volume = 0.78;
@@ -2744,8 +2749,6 @@
 
       if (event) {
 
-        event.preventDefault();
-
         event.stopPropagation();
 
       }
@@ -2760,30 +2763,49 @@
 
     }
 
-    /* Chạm vào bất kỳ vị trí nào trên lớp màn hình để bắt đầu nhạc. */
+    /* Chạm/click để bắt đầu nhạc - ổn định hơn trên iPhone và Android. */
 
-    musicUnlock.addEventListener(
+    let lastUnlockAt = 0;
 
-      "pointerdown",
+    function handleMusicUnlock(event) {
 
-      unlockMusicFromScreen
+      const now = Date.now();
 
-    );
-
-    musicUnlock.addEventListener(
-
-      "keydown",
-
-      (event) => {
-
-        if (event.key === "Enter" || event.key === " ") {
-
-          unlockMusicFromScreen(event);
-
-        }
-
+      /* Tránh touchend + click chạy hai lần trên cùng một lần chạm. */
+      if (now - lastUnlockAt < 500) {
+        return;
       }
 
+      lastUnlockAt = now;
+      unlockMusicFromScreen(event);
+
+    }
+
+    musicUnlockButton.addEventListener(
+      "click",
+      handleMusicUnlock
+    );
+
+    /* Fallback cho một số trình duyệt di động cũ. */
+    musicUnlockButton.addEventListener(
+      "touchend",
+      (event) => {
+        if (event.cancelable) {
+          event.preventDefault();
+        }
+        handleMusicUnlock(event);
+      },
+      { passive: false }
+    );
+
+    /* Người dùng có thể chạm cả vùng nền phủ, không cần chạm đúng chữ. */
+    musicUnlock.addEventListener(
+      "click",
+      (event) => {
+        if (event.target === musicUnlock) {
+          handleMusicUnlock(event);
+        }
+      }
     );
 
     backgroundMusic.addEventListener(
