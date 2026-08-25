@@ -1295,21 +1295,6 @@
     }
 
 
-
-    /* =========================================
-       COUNTDOWN REDIRECT
-    ========================================= */
-
-    .countdown-text {
-      margin-top: 8px;
-      min-height: 18px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.92);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    }
-
     /* =========================================
        REDUCE MOTION
     ========================================= */
@@ -1661,12 +1646,6 @@
 
       </div>
 
-      <div
-        class="countdown-text"
-        id="countdownText"
-        aria-live="polite"
-      ></div>
-
 
     </div>
 
@@ -1747,12 +1726,6 @@
       );
 
 
-    const countdownText =
-      document.getElementById(
-        "countdownText"
-      );
-
-
     let currentIndex = 0;
 
     /* =========================================
@@ -1760,60 +1733,13 @@
     ========================================= */
 
     const AUTO_SLIDE_DELAY = 3000;
-    const REDIRECT_DELAY = 5;
-    const REDIRECT_PAGE = "luachon.html";
-
     let autoSlideTimer = null;
-    let countdownTimer = null;
-    let redirectStarted = false;
 
     function stopAutoSlide() {
       if (autoSlideTimer) {
         clearInterval(autoSlideTimer);
         autoSlideTimer = null;
       }
-    }
-
-    function stopCountdown() {
-      if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
-      }
-    }
-
-    function startRedirectCountdown() {
-      if (redirectStarted) {
-        return;
-      }
-
-      redirectStarted = true;
-      stopAutoSlide();
-      stopCountdown();
-
-      let secondsLeft = REDIRECT_DELAY;
-
-      countdownText.textContent =
-        `Chuyển trang sau ${secondsLeft} giây...`;
-
-      countdownTimer = setInterval(
-        () => {
-          secondsLeft -= 1;
-
-          if (secondsLeft > 0) {
-            countdownText.textContent =
-              `Chuyển trang sau ${secondsLeft} giây...`;
-          }
-          else {
-            stopCountdown();
-            countdownText.textContent =
-              "Đang chuyển trang...";
-
-            window.location.href =
-              REDIRECT_PAGE;
-          }
-        },
-        1000
-      );
     }
 
     function startAutoSlide() {
@@ -1823,36 +1749,9 @@
         () => {
           if (
             lightbox.classList.contains("active") &&
-            !document.hidden &&
-            !redirectStarted
+            !document.hidden
           ) {
-            if (
-              currentIndex <
-              images.length - 1
-            ) {
-              currentIndex += 1;
-              updatePhoto();
-
-              if (
-                currentIndex ===
-                images.length - 1
-              ) {
-                stopAutoSlide();
-
-                setTimeout(
-                  () => {
-                    if (
-                      lightbox.classList.contains("active") &&
-                      currentIndex ===
-                        images.length - 1
-                    ) {
-                      startRedirectCountdown();
-                    }
-                  },
-                  AUTO_SLIDE_DELAY
-                );
-              }
-            }
+            nextPhoto(false);
           }
         },
         AUTO_SLIDE_DELAY
@@ -1860,13 +1759,9 @@
     }
 
     function restartAutoSlide() {
-      if (
-        lightbox.classList.contains("active") &&
-        !redirectStarted
-      ) {
+      if (lightbox.classList.contains("active")) {
         startAutoSlide();
       }
-    }
     }
 
 
@@ -1907,8 +1802,6 @@
                 .overflow =
                 "hidden";
 
-              redirectStarted = false;
-              countdownText.textContent = "";
               startAutoSlide();
 
             }
@@ -1985,19 +1878,19 @@
       restartTimer = true
     ) {
 
-      if (
-        currentIndex <
-        images.length - 1
-      ) {
-        currentIndex += 1;
-        updatePhoto();
+      currentIndex =
+        (
+          currentIndex +
+          1
+        )
+        %
+        images.length;
 
-        if (restartTimer) {
-          restartAutoSlide();
-        }
-      }
-      else {
-        startRedirectCountdown();
+
+      updatePhoto();
+
+      if (restartTimer) {
+        restartAutoSlide();
       }
 
     }
@@ -2008,10 +1901,6 @@
     ========================================= */
 
     function prevPhoto() {
-
-      if (redirectStarted) {
-        return;
-      }
 
       currentIndex =
         (
@@ -2081,7 +1970,6 @@
         "";
 
       stopAutoSlide();
-      stopCountdown();
 
     }
 
@@ -2859,8 +2747,6 @@
           .overflow =
           "hidden";
 
-        redirectStarted = false;
-        countdownText.textContent = "";
         startAutoSlide();
       }
     );
