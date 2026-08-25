@@ -269,6 +269,16 @@
             text-decoration: none;
         }
 
+        /* =================================================
+           ICON ĐIỆN THOẠI QUAY SANG PHẢI
+           ================================================= */
+
+        .phone-icon {
+            display: inline-block;
+            transform: rotate(90deg);
+            transform-origin: center center;
+        }
+
         /* ================= KHU VỰC TIN NHẮN ================= */
 
         .messages {
@@ -660,9 +670,11 @@
         id="main-container"
     >
 
-        <!-- Header -->
+        <!-- ================= HEADER ================= -->
+
         <div class="header">
 
+            <!-- Nút quay lại -->
             <div
                 class="back-button"
                 id="back-button"
@@ -671,6 +683,8 @@
                 <i class="fas fa-chevron-left"></i>
             </div>
 
+
+            <!-- Profile -->
             <div class="profile">
 
                 <div class="profile-pic-wrapper">
@@ -685,9 +699,12 @@
 
                 </div>
 
+
                 <div class="profile-info">
 
-                    <h4>Nguyễn Thanh Sang</h4>
+                    <h4>
+                        Nguyễn Thanh Sang
+                    </h4>
 
                     <span id="online-status">
                         Đang hoạt động
@@ -697,17 +714,25 @@
 
             </div>
 
+
+            <!-- Các icon bên phải -->
             <div class="header-icons">
 
-                <!-- Icon gọi điện -->
+                <!-- =========================
+                     ICON GỌI ĐIỆN
+                     ĐÃ QUAY SANG PHẢI
+                     ========================= -->
+
                 <div
                     class="header-icon"
                     aria-label="Gọi điện"
                 >
-                    <i class="fas fa-phone-alt"></i>
+                    <i class="fas fa-phone-alt phone-icon"></i>
                 </div>
 
+
                 <!-- Icon gọi video -->
+
                 <div
                     class="header-icon"
                     aria-label="Gọi video"
@@ -715,7 +740,12 @@
                     <i class="fas fa-video"></i>
                 </div>
 
-                <!-- Nhấn icon i để chuyển đến profile.html -->
+
+                <!--
+                    Nhấn icon i
+                    chuyển tới profile.html
+                -->
+
                 <a
                     href="profile.html"
                     class="header-icon profile-link"
@@ -729,7 +759,9 @@
 
         </div>
 
-        <!-- Danh sách tin nhắn -->
+
+        <!-- ================= DANH SÁCH TIN NHẮN ================= -->
+
         <div
             class="messages"
             id="message-list"
@@ -739,8 +771,9 @@
                 class="message received message-first"
                 data-delay="600"
             >
-                Gửi Sữa, 
+                Gửi Sữa,
             </div>
+
 
             <div
                 class="message received"
@@ -749,12 +782,14 @@
                 Hôm nay là ngày thật đặc biệt,
             </div>
 
+
             <div
                 class="message received"
                 data-delay="5000"
             >
                 Và anh mong mọi niềm vui đều nhẹ nhàng chảy về phía em.
             </div>
+
 
             <div
                 class="message received"
@@ -763,12 +798,14 @@
                 Chúc em luôn khoẻ mạnh, bình an và cười thật nhiều.
             </div>
 
+
             <div
                 class="message received"
                 data-delay="10000"
             >
                 Nếu một điều ước được chọn,
             </div>
+
 
             <div
                 class="message received"
@@ -777,6 +814,7 @@
                 Anh ước được xuất hiện trong những khoảnh khắc đẹp nhất của em.
             </div>
 
+
             <div
                 class="message received message-last"
                 data-delay="15000"
@@ -784,7 +822,9 @@
                 Hy vọng tuổi mới mang đến thật nhiều ngọt ngào.
             </div>
 
+
             <!-- Hiệu ứng đang nhập -->
+
             <div
                 class="typing-indicator"
                 id="typing-indicator"
@@ -796,7 +836,9 @@
 
         </div>
 
-        <!-- Thanh nhập tin nhắn -->
+
+        <!-- ================= THANH NHẬP TIN NHẮN ================= -->
+
         <div class="bottom-bar">
 
             <div class="action-icons">
@@ -809,6 +851,7 @@
 
             </div>
 
+
             <div class="input-container">
 
                 <input
@@ -819,6 +862,7 @@
 
             </div>
 
+
             <div class="heart-button">
                 ❤️
             </div>
@@ -827,186 +871,326 @@
 
     </div>
 
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
 
-            const mainContainer =
-                document.getElementById("main-container");
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
 
-            const messageList =
-                document.getElementById("message-list");
+                /* ================= LẤY ELEMENT ================= */
 
-            const typingIndicator =
-                document.getElementById("typing-indicator");
+                const mainContainer =
+                    document.getElementById(
+                        "main-container"
+                    );
 
-            const onlineStatus =
-                document.getElementById("online-status");
 
-            const backButton =
-                document.getElementById("back-button");
+                const messageList =
+                    document.getElementById(
+                        "message-list"
+                    );
 
-            const profileLink =
-                document.getElementById("profile-link");
 
-            const messages = Array.from(
-                document.querySelectorAll(".message")
-            );
+                const typingIndicator =
+                    document.getElementById(
+                        "typing-indicator"
+                    );
 
-            let isLeavingPage = false;
 
-            let transitionTimer = null;
-            let redirectTimer = null;
+                const onlineStatus =
+                    document.getElementById(
+                        "online-status"
+                    );
 
-            /*
-                Tổng thời gian:
-                - Bắt đầu mờ ở giây thứ 19
-                - Chuyển sang chu.html ở giây thứ 20
-            */
-            const pageTransitionTime = 19000;
-            const redirectTime = 20000;
 
-            function scrollToBottom() {
-                requestAnimationFrame(function () {
+                const backButton =
+                    document.getElementById(
+                        "back-button"
+                    );
 
-                    messageList.scrollTo({
-                        top: messageList.scrollHeight,
-                        behavior: "smooth"
-                    });
 
-                });
-            }
+                const profileLink =
+                    document.getElementById(
+                        "profile-link"
+                    );
 
-            function showTyping() {
-                if (isLeavingPage) {
-                    return;
-                }
 
-                typingIndicator.classList.add("show");
-                onlineStatus.textContent = "Đang nhập...";
+                const messages =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".message"
+                        )
+                    );
 
-                scrollToBottom();
-            }
 
-            function hideTyping() {
-                typingIndicator.classList.remove("show");
-                onlineStatus.textContent = "Đang hoạt động";
-            }
+                /* ================= BIẾN ================= */
 
-            function cancelAutomaticRedirect() {
-                if (transitionTimer) {
-                    clearTimeout(transitionTimer);
-                }
+                let isLeavingPage = false;
 
-                if (redirectTimer) {
-                    clearTimeout(redirectTimer);
-                }
-            }
+                let transitionTimer = null;
 
-            /*
-                Hiển thị từng tin nhắn.
-            */
-            messages.forEach(function (message, index) {
+                let redirectTimer = null;
 
-                const delay =
-                    Number(message.dataset.delay) || 0;
 
                 /*
-                    Hiện dấu ba chấm trước mỗi tin nhắn,
-                    trừ tin nhắn đầu tiên.
+                    Tổng thời gian:
+
+                    19 giây:
+                    bắt đầu hiệu ứng mờ
+
+                    20 giây:
+                    chuyển trang khoankhac.html
                 */
-                if (index > 0) {
 
-                    const typingStart =
-                        Math.max(0, delay - 900);
+                const pageTransitionTime = 19000;
 
-                    setTimeout(function () {
-                        showTyping();
-                    }, typingStart);
+                const redirectTime = 20000;
+
+
+                /* ================= CUỘN XUỐNG DƯỚI ================= */
+
+                function scrollToBottom() {
+
+                    requestAnimationFrame(
+                        function () {
+
+                            messageList.scrollTo({
+
+                                top:
+                                    messageList.scrollHeight,
+
+                                behavior:
+                                    "smooth"
+
+                            });
+
+                        }
+                    );
 
                 }
 
-                setTimeout(function () {
+
+                /* ================= HIỆN ĐANG NHẬP ================= */
+
+                function showTyping() {
 
                     if (isLeavingPage) {
                         return;
                     }
 
-                    hideTyping();
 
-                    message.classList.add(
-                        "show-message"
+                    typingIndicator.classList.add(
+                        "show"
                     );
+
+
+                    onlineStatus.textContent =
+                        "Đang nhập...";
+
 
                     scrollToBottom();
 
-                }, delay);
+                }
 
-            });
 
-            /*
-                Nhấn vào icon i:
-                chuyển sang trang profile.html.
-            */
-            profileLink.addEventListener(
-                "click",
-                function () {
+                /* ================= ẨN ĐANG NHẬP ================= */
 
-                    isLeavingPage = true;
+                function hideTyping() {
 
-                    cancelAutomaticRedirect();
+                    typingIndicator.classList.remove(
+                        "show"
+                    );
 
-                    hideTyping();
+
+                    onlineStatus.textContent =
+                        "Đang hoạt động";
 
                 }
-            );
 
-            /*
-                Nút quay lại.
-            */
-            backButton.addEventListener(
-                "click",
-                function () {
 
-                    if (window.history.length > 1) {
-                        window.history.back();
+                /* ================= HỦY CHUYỂN TRANG ================= */
+
+                function cancelAutomaticRedirect() {
+
+                    if (transitionTimer) {
+
+                        clearTimeout(
+                            transitionTimer
+                        );
+
+                    }
+
+
+                    if (redirectTimer) {
+
+                        clearTimeout(
+                            redirectTimer
+                        );
+
                     }
 
                 }
-            );
 
-            /*
-                Mờ giao diện ở giây thứ 19.
-            */
-            transitionTimer = setTimeout(function () {
 
-                if (isLeavingPage) {
-                    return;
-                }
+                /* ================= HIỆN TỪNG TIN NHẮN ================= */
 
-                hideTyping();
+                messages.forEach(
+                    function (
+                        message,
+                        index
+                    ) {
 
-                mainContainer.classList.add(
-                    "fade-out"
+                        const delay =
+                            Number(
+                                message.dataset.delay
+                            ) || 0;
+
+
+                        /*
+                            Hiện dấu ba chấm
+                            trước mỗi tin nhắn.
+
+                            Trừ tin đầu tiên.
+                        */
+
+                        if (index > 0) {
+
+                            const typingStart =
+                                Math.max(
+                                    0,
+                                    delay - 900
+                                );
+
+
+                            setTimeout(
+                                function () {
+
+                                    showTyping();
+
+                                },
+                                typingStart
+                            );
+
+                        }
+
+
+                        setTimeout(
+                            function () {
+
+                                if (isLeavingPage) {
+                                    return;
+                                }
+
+
+                                hideTyping();
+
+
+                                message.classList.add(
+                                    "show-message"
+                                );
+
+
+                                scrollToBottom();
+
+                            },
+                            delay
+                        );
+
+                    }
                 );
 
-            }, pageTransitionTime);
 
-            /*
-                Chuyển sang chu.html ở giây thứ 20.
-            */
-            redirectTimer = setTimeout(function () {
+                /* ================= ICON PROFILE ================= */
 
-                if (isLeavingPage) {
-                    return;
-                }
+                /*
+                    Khi nhấn vào icon i
+                    sẽ chuyển sang:
 
-                isLeavingPage = true;
+                    profile.html
+                */
 
-                window.location.href = "khoankhac.html";
+                profileLink.addEventListener(
+                    "click",
+                    function () {
 
-            }, redirectTime);
+                        isLeavingPage = true;
 
-        });
+
+                        cancelAutomaticRedirect();
+
+
+                        hideTyping();
+
+                    }
+                );
+
+
+                /* ================= NÚT QUAY LẠI ================= */
+
+                backButton.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            window.history.length > 1
+                        ) {
+
+                            window.history.back();
+
+                        }
+
+                    }
+                );
+
+
+                /* ================= HIỆU ỨNG MỜ Ở GIÂY 19 ================= */
+
+                transitionTimer =
+                    setTimeout(
+                        function () {
+
+                            if (isLeavingPage) {
+                                return;
+                            }
+
+
+                            hideTyping();
+
+
+                            mainContainer.classList.add(
+                                "fade-out"
+                            );
+
+                        },
+                        pageTransitionTime
+                    );
+
+
+                /* ================= CHUYỂN TRANG GIÂY 20 ================= */
+
+                redirectTimer =
+                    setTimeout(
+                        function () {
+
+                            if (isLeavingPage) {
+                                return;
+                            }
+
+
+                            isLeavingPage = true;
+
+
+                            window.location.href =
+                                "khoankhac.html";
+
+                        },
+                        redirectTime
+                    );
+
+            }
+        );
+
     </script>
 
 </body>
