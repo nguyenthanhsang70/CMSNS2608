@@ -626,6 +626,62 @@
     }
 
 
+
+    /* =========================================
+       COUNTDOWN REDIRECT
+    ========================================= */
+
+    .redirect-countdown {
+      position: absolute;
+      inset: 0;
+      z-index: 190;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      border-radius: 15px;
+
+      background:
+        rgba(29, 16, 26, 0.72);
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      color: #ffffff;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+
+      pointer-events: none;
+    }
+
+    .redirect-countdown.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .redirect-countdown-number {
+      font-size: 56px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .redirect-countdown-text {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.82);
+      text-align: center;
+      padding: 0 18px;
+    }
+
+
     /* =========================================
        BUTTON RESET
     ========================================= */
@@ -1586,6 +1642,28 @@
           >
 
 
+          <!-- ĐẾM NGƯỢC CHUYỂN TRANG -->
+
+          <div
+            class="redirect-countdown"
+            id="redirectCountdown"
+            aria-live="polite"
+          >
+
+            <div
+              class="redirect-countdown-number"
+              id="redirectCountdownNumber"
+            >
+              5
+            </div>
+
+            <div class="redirect-countdown-text">
+              Sắp chuyển sang trang đánh giá...
+            </div>
+
+          </div>
+
+
         </div>
 
 
@@ -1726,6 +1804,18 @@
       );
 
 
+    const redirectCountdown =
+      document.getElementById(
+        "redirectCountdown"
+      );
+
+
+    const redirectCountdownNumber =
+      document.getElementById(
+        "redirectCountdownNumber"
+      );
+
+
     let currentIndex = 0;
 
     /* =========================================
@@ -1733,7 +1823,12 @@
     ========================================= */
 
     const AUTO_SLIDE_DELAY = 3000;
+    const REDIRECT_DELAY = 5;
+
     let autoSlideTimer = null;
+    let redirectTimer = null;
+    let redirectSeconds = REDIRECT_DELAY;
+    let isRedirectCounting = false;
 
     function stopAutoSlide() {
       if (autoSlideTimer) {
@@ -1742,8 +1837,67 @@
       }
     }
 
+    function stopRedirectCountdown() {
+      if (redirectTimer) {
+        clearInterval(redirectTimer);
+        redirectTimer = null;
+      }
+
+      isRedirectCounting = false;
+      redirectSeconds = REDIRECT_DELAY;
+
+      redirectCountdown
+        .classList
+        .remove("active");
+
+      redirectCountdownNumber.textContent =
+        REDIRECT_DELAY;
+    }
+
+    function startRedirectCountdown() {
+      if (isRedirectCounting) {
+        return;
+      }
+
+      stopAutoSlide();
+
+      isRedirectCounting = true;
+      redirectSeconds = REDIRECT_DELAY;
+
+      redirectCountdownNumber.textContent =
+        redirectSeconds;
+
+      redirectCountdown
+        .classList
+        .add("active");
+
+      redirectTimer = setInterval(
+        () => {
+          redirectSeconds -= 1;
+
+          if (redirectSeconds <= 0) {
+            clearInterval(redirectTimer);
+            redirectTimer = null;
+
+            window.location.href =
+              "danhgia.html";
+
+            return;
+          }
+
+          redirectCountdownNumber.textContent =
+            redirectSeconds;
+        },
+        1000
+      );
+    }
+
     function startAutoSlide() {
       stopAutoSlide();
+
+      if (isRedirectCounting) {
+        return;
+      }
 
       autoSlideTimer = setInterval(
         () => {
@@ -1751,7 +1905,18 @@
             lightbox.classList.contains("active") &&
             !document.hidden
           ) {
-            nextPhoto(false);
+
+            if (
+              currentIndex ===
+              images.length - 1
+            ) {
+              startRedirectCountdown();
+            }
+
+            else {
+              nextPhoto(false);
+            }
+
           }
         },
         AUTO_SLIDE_DELAY
@@ -1759,6 +1924,8 @@
     }
 
     function restartAutoSlide() {
+      stopRedirectCountdown();
+
       if (lightbox.classList.contains("active")) {
         startAutoSlide();
       }
@@ -1970,6 +2137,7 @@
         "";
 
       stopAutoSlide();
+      stopRedirectCountdown();
 
     }
 
@@ -2713,6 +2881,10 @@
       () => {
         if (document.hidden) {
           stopAutoSlide();
+
+          if (isRedirectCounting) {
+            stopRedirectCountdown();
+          }
         }
         else if (
           lightbox.classList.contains("active")
