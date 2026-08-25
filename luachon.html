@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   viewport-fit=cover">
+
+    <title>Mời em chọn</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding:
+                max(24px, env(safe-area-inset-top))
+                max(20px, env(safe-area-inset-right))
+                max(24px, env(safe-area-inset-bottom))
+                max(20px, env(safe-area-inset-left));
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255,255,255,0.8),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffe8ef 0%,
+                    #f5e9ff 50%,
+                    #e4efff 100%
+                );
+        }
+
+        /* =========================
+           BACKGROUND BLOBS
+        ========================== */
+
+        .blob {
+            position: fixed;
+
+            border-radius: 50%;
+            filter: blur(8px);
+
+            pointer-events: none;
+
+            opacity: .55;
+
+            animation:
+                float 8s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: 260px;
+            height: 260px;
+
+            background: #ffb8cc;
+
+            top: -80px;
+            left: -80px;
+        }
+
+        .blob-2 {
+            width: 320px;
+            height: 320px;
+
+            background: #c9c5ff;
+
+            right: -130px;
+            bottom: -100px;
+
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(15px, -15px);
+            }
+        }
+
+        /* =========================
+           MAIN CARD
+        ========================== */
+
+        .card {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            max-width: 430px;
+
+            padding:
+                42px
+                28px
+                30px;
+
+            border-radius: 30px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .74
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .9
+                );
+
+            backdrop-filter:
+                blur(24px);
+
+            -webkit-backdrop-filter:
+                blur(24px);
+
+            box-shadow:
+                0 25px 70px
+                rgba(
+                    73,
+                    53,
+                    92,
+                    .14
+                ),
+                inset 0 1px 0
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .9
+                );
+
+            text-align: center;
+
+            animation:
+                cardIn
+                .65s
+                cubic-bezier(
+                    .2,
+                    .8,
+                    .2,
+                    1
+                );
+        }
+
+        @keyframes cardIn {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(.96);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        /* =========================
+           TITLE
+        ========================== */
+
+        .mini-title {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 32px;
+
+            padding:
+                7px 15px;
+
+            margin-bottom: 18px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .70
+                );
+
+            color: #9a6b87;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: .4px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(
+                    79,
+                    50,
+                    79,
+                    .06
+                );
+        }
+
+        h1 {
+            color: #29232c;
+
+            font-size:
+                clamp(
+                    29px,
+                    8vw,
+                    40px
+                );
+
+            line-height: 1.15;
+
+            letter-spacing:
+                -1.4px;
+
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #777079;
+
+            font-size: 15px;
+            line-height: 1.6;
+
+            max-width: 310px;
+
+            margin:
+                0 auto 30px;
+        }
+
+        /* =========================
+           CHOICE BUTTONS
+        ========================== */
+
+        .choices {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+        }
+
+        .choice {
+            width: 100%;
+
+            min-height: 78px;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            padding:
+                12px 16px;
+
+            border: none;
+
+            border-radius: 22px;
+
+            cursor: pointer;
+
+            font: inherit;
+
+            text-align: left;
+
+            overflow: hidden;
+
+            transition:
+                transform .22s ease,
+                box-shadow .22s ease,
+                background .22s ease;
+        }
+
+        .choice:active {
+            transform:
+                scale(.97);
+        }
+
+        @media (hover:hover) {
+
+            .choice:hover {
+                transform:
+                    translateY(-3px);
+            }
+
+        }
+
+        /* =========================
+           MESSENGER BUTTON
+        ========================== */
+
+        .messenger {
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0084ff 0%,
+                    #5168ff 38%,
+                    #9b4dff 68%,
+                    #e343d0 100%
+                );
+
+            box-shadow:
+                0 14px 32px
+                rgba(
+                    76,
+                    84,
+                    235,
+                    .28
+                );
+        }
+
+        .messenger::before {
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .12
+                );
+
+            top: -110px;
+            right: -35px;
+
+            pointer-events: none;
+        }
+
+        .messenger::after {
+            content: "";
+
+            position: absolute;
+
+            width: 100px;
+            height: 100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .07
+                );
+
+            left: 20px;
+            bottom: -75px;
+
+            pointer-events: none;
+        }
+
+        @media (hover:hover) {
+
+            .messenger:hover {
+                box-shadow:
+                    0 19px 40px
+                    rgba(
+                        74,
+                        93,
+                        245,
+                        .36
+                    );
+            }
+
+        }
+
+        /* =========================
+           WEBSITE BUTTON
+        ========================== */
+
+        .website {
+            color: #353038;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .92
+                );
+
+            border:
+                1px solid
+                rgba(
+                    50,
+                    40,
+                    55,
+                    .06
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    68,
+                    49,
+                    70,
+                    .08
+                );
+        }
+
+        @media (hover:hover) {
+
+            .website:hover {
+                background: #fff;
+
+                box-shadow:
+                    0 16px 35px
+                    rgba(
+                        68,
+                        49,
+                        70,
+                        .13
+                    );
+            }
+
+        }
+
+        /* =========================
+           ICON BOX
+        ========================== */
+
+        .icon-box {
+            width: 52px;
+            height: 52px;
+
+            flex:
+                0 0 52px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-right: 14px;
+
+            border-radius: 17px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        /* =========================
+           NEW MESSENGER ICON
+        ========================== */
+
+        .messenger .icon-box {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        .27
+                    ),
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        .10
+                    )
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .25
+                );
+
+            box-shadow:
+                inset 0 1px 1px
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .30
+                ),
+                0 8px 20px
+                rgba(
+                    41,
+                    35,
+                    138,
+                    .20
+                );
+
+            overflow: hidden;
+        }
+
+        .messenger .icon-box::before {
+            content: "";
+
+            position: absolute;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(
+                        255,
+                        255,
+                        255,
+                        .30
+                    ),
+                    transparent
+                    70%
+                );
+
+            top: -12px;
+            left: -10px;
+        }
+
+        .messenger .icon-box svg {
+            width: 32px;
+            height: 32px;
+
+            position: relative;
+
+            z-index: 3;
+
+            filter:
+                drop-shadow(
+                    0 3px 5px
+                    rgba(
+                        34,
+                        28,
+                        110,
+                        .20
+                    )
+                );
+
+            transition:
+                transform
+                .25s
+                cubic-bezier(
+                    .2,
+                    .8,
+                    .2,
+                    1
+                );
+        }
+
+        @media (hover:hover) {
+
+            .messenger:hover
+            .icon-box svg {
+
+                transform:
+                    scale(1.12)
+                    rotate(-4deg);
+            }
+
+        }
+
+        .messenger:active
+        .icon-box svg {
+
+            transform:
+                scale(.92);
+        }
+
+        /* =========================
+           WEBSITE ICON
+        ========================== */
+
+        .website .icon-box {
+            background:
+                #f5f1f7;
+
+            box-shadow:
+                inset 0 1px 1px
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .9
+                );
+        }
+
+        .website .icon-box svg {
+            width: 27px;
+            height: 27px;
+        }
+
+        /* =========================
+           TEXT
+        ========================== */
+
+        .choice-text {
+            flex: 1;
+
+            min-width: 0;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .choice-title {
+            display: block;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            margin-bottom: 4px;
+        }
+
+        .choice-subtitle {
+            display: block;
+
+            font-size: 12.5px;
+
+            line-height: 1.35;
+
+            opacity: .78;
+        }
+
+        /* =========================
+           ARROW
+        ========================== */
+
+        .arrow {
+            width: 36px;
+            height: 36px;
+
+            margin-left: 10px;
+
+            flex:
+                0 0 36px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            font-size: 22px;
+
+            font-weight: 300;
+
+            position: relative;
+
+            z-index: 2;
+
+            transition:
+                transform .2s ease;
+        }
+
+        .messenger .arrow {
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .17
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .15
+                );
+        }
+
+        .website .arrow {
+            background:
+                #f5f1f7;
+        }
+
+        @media (hover:hover) {
+
+            .choice:hover .arrow {
+                transform:
+                    translateX(3px);
+            }
+
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+            margin-top: 25px;
+
+            color: #a09aa1;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width:380px) {
+
+            .card {
+                padding:
+                    34px
+                    19px
+                    24px;
+
+                border-radius: 26px;
+            }
+
+            .choice {
+                min-height: 72px;
+
+                padding:
+                    10px
+                    12px;
+            }
+
+            .icon-box {
+                width: 48px;
+                height: 48px;
+
+                flex-basis: 48px;
+
+                margin-right: 11px;
+
+                border-radius: 15px;
+            }
+
+            .messenger
+            .icon-box svg {
+
+                width: 29px;
+                height: 29px;
+            }
+
+            .choice-title {
+                font-size: 15px;
+            }
+
+            .choice-subtitle {
+                font-size: 11.5px;
+            }
+
+        }
+
+        /* =========================
+           DESKTOP
+        ========================== */
+
+        @media (min-width:900px) {
+
+            .card {
+                max-width: 470px;
+
+                padding:
+                    48px
+                    34px
+                    34px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+
+    <!-- MAIN -->
+
+    <main class="card">
+
+        <div class="mini-title">
+            Dành cho em
+        </div>
+
+
+        <h1>
+            Mời em chọn
+        </h1>
+
+
+        <p class="description">
+            Em muốn nhắn tin với anh
+            hay vào xem trang web của anh?
+        </p>
+
+
+        <div class="choices">
+
+
+            <!-- =====================
+                 MESSENGER
+            ====================== -->
+
+            <button
+                class="choice messenger"
+                onclick="openMessenger()"
+                type="button"
+            >
+
+                <div class="icon-box">
+
+                    <svg
+                        viewBox="0 0 48 48"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+
+                        <!-- Messenger bubble -->
+
+                        <path
+                            d="
+                                M24 5
+                                C13.3 5 5 12.8 5 23
+                                C5 28.7 7.7 33.8 12.2 37.2
+                                V43
+                                L17.5 40.1
+                                C19.5 40.7 21.7 41 24 41
+                                C34.7 41 43 33.2 43 23
+                                S34.7 5 24 5Z
+                            "
+                            fill="white"
+                        />
+
+
+                        <!-- Messenger lightning -->
+
+                        <path
+                            d="
+                                M13.5 28.6
+                                L20.3 21.4
+                                L25.6 25.5
+                                L34.5 16.2
+                                L27.7 28.7
+                                L22.3 24.6
+                                Z
+                            "
+                            fill="url(#messGradient)"
+                        />
+
+
+                        <defs>
+
+                            <linearGradient
+                                id="messGradient"
+                                x1="14"
+                                y1="17"
+                                x2="34"
+                                y2="30"
+                                gradientUnits="userSpaceOnUse"
+                            >
+
+                                <stop
+                                    stop-color="#00B2FF"
+                                />
+
+                                <stop
+                                    offset=".48"
+                                    stop-color="#6A5CFF"
+                                />
+
+                                <stop
+                                    offset="1"
+                                    stop-color="#D52EFF"
+                                />
+
+                            </linearGradient>
+
+                        </defs>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="choice-text">
+
+                    <span class="choice-title">
+                        Nhắn tin qua Messenger
+                    </span>
+
+                    <span class="choice-subtitle">
+                        Qua đây nói chuyện với anh nha
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ›
+                </div>
+
+            </button>
+
+
+            <!-- =====================
+                 WEBSITE
+            ====================== -->
+
+            <button
+                class="choice website"
+                onclick="openWebsite()"
+                type="button"
+            >
+
+                <div class="icon-box">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        />
+
+                        <path
+                            d="M3 12h18"
+                        />
+
+                        <path
+                            d="
+                                M12 3
+                                C14.3 5.5
+                                15.5 8.5
+                                15.5 12
+                                S14.3 18.5
+                                12 21
+                            "
+                        />
+
+                        <path
+                            d="
+                                M12 3
+                                C9.7 5.5
+                                8.5 8.5
+                                8.5 12
+                                S9.7 18.5
+                                12 21
+                            "
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div class="choice-text">
+
+                    <span class="choice-title">
+                        Vào web của anh
+                    </span>
+
+                    <span class="choice-subtitle">
+                        Xem một chút anh làm gì ở đây
+                    </span>
+
+                </div>
+
+
+                <div class="arrow">
+                    ›
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <div class="footer">
+            Chọn một nơi em muốn đến
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        function openMessenger() {
+
+            window.location.href =
+                "https://www.facebook.com/nguyenthanhsang70";
+
+        }
+
+
+        function openWebsite() {
+
+            window.location.href =
+                "https://nguyenthanhsang70.github.io/Novaris/";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
