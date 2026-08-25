@@ -2609,11 +2609,7 @@
 
   >
 
-    <!-- Giữ đúng tên bạn yêu cầu; type giúp trình duyệt nhận .mp là MP3/MPEG -->
-
-    <source src="suaoisuaoi.mp" type="audio/mpeg">
-
-    <!-- Dự phòng nếu file thực tế đang có đuôi .mp3 -->
+    <!-- Nhạc chỉ phát sau thao tác chạm của người dùng trên điện thoại -->
 
     <source src="suaoisuaoi.mp3" type="audio/mpeg">
 
@@ -2635,8 +2631,6 @@
       class="music-unlock-button"
       id="musicUnlockButton"
       type="button"
-      onclick="unlockMusicFromScreen(event)"
-      ontouchstart="unlockMusicFromScreen(event)"
     >
       Chạm vào màn hình
     </button>
@@ -2741,70 +2735,69 @@
       musicLoadFailed = true;
       musicUnlock.classList.add("active");
       if (musicUnlockButton) {
-        musicUnlockButton.textContent = "Chạm để tiếp tục";
+        musicUnlockButton.textContent = "Chạm để phát nhạc";
       }
 
     }
 
-    let unlockHandled = false;
+    let musicPlayPending = false;
 
-    function unlockMusicFromScreen(event) {
+    async function unlockMusicFromScreen(event) {
 
       if (event) {
         event.stopPropagation();
       }
 
-      if (unlockHandled) {
+      if (musicStarted || musicPlayPending) {
         return;
       }
-      unlockHandled = true;
 
-      /*
-        QUAN TRỌNG CHO MOBILE:
-        Chạm là mở màn hình NGAY, không chờ audio.play().
-        Nếu điện thoại chặn nhạc hoặc thiếu file nhạc, giao diện vẫn dùng bình thường.
-      */
-      hideMusicUnlock();
-      musicUnlock.style.pointerEvents = "none";
+      musicPlayPending = true;
 
-      /* Phát nhạc trong chính thao tác người dùng, nhưng không khóa giao diện nếu thất bại. */
-      backgroundMusic.muted = false;
-      backgroundMusic.volume = 0.78;
-      const playPromise = backgroundMusic.play();
-      if (playPromise && typeof playPromise.then === "function") {
-        playPromise
-          .then(() => {
-            musicStarted = true;
-          })
-          .catch(() => {
-            /* Không làm gì: người dùng vẫn tiếp tục xem ảnh. */
-          });
+      try {
+        /*
+          MOBILE: audio.play() phải chạy trực tiếp từ thao tác người dùng.
+          Chỉ sau khi phát thành công mới ẩn màn hình chạm.
+        */
+        backgroundMusic.muted = false;
+        backgroundMusic.volume = 0.78;
+        await backgroundMusic.play();
+
+        musicStarted = true;
+        hideMusicUnlock();
+        musicUnlock.style.pointerEvents = "none";
+
+        if (!isRedirectCounting) {
+          startAutoSlide();
+        }
       }
-
-      /* Bắt đầu slideshow bất kể nhạc có phát được hay không. */
-      if (!isRedirectCounting) {
-        startAutoSlide();
+      catch (error) {
+        /* Nếu trình duyệt chưa cho phát, giữ lớp chạm để người dùng thử lại. */
+        musicStarted = false;
+        musicUnlock.style.pointerEvents = "auto";
+        musicUnlock.classList.add("active");
+        if (musicUnlockButton) {
+          musicUnlockButton.textContent = "Chạm để phát nhạc";
+        }
+      }
+      finally {
+        musicPlayPending = false;
       }
 
     }
 
     function handleMusicUnlock(event) {
-      if (event && event.cancelable && event.type === "touchstart") {
-        event.preventDefault();
-      }
       unlockMusicFromScreen(event);
     }
 
     /*
-      Dùng nhiều loại sự kiện để tương thích Safari iOS, Chrome Android
-      và một số WebView/Facebook/Zalo browser. unlockHandled ngăn chạy lặp.
+      Dùng touchend cho Safari iPhone/Android và click làm fallback.
+      Không preventDefault để tránh chặn thao tác click hợp lệ của trình duyệt.
     */
-    musicUnlockButton.addEventListener("touchstart", handleMusicUnlock, { passive: false });
-    musicUnlockButton.addEventListener("pointerup", handleMusicUnlock);
+    musicUnlockButton.addEventListener("touchend", handleMusicUnlock, { passive: true });
     musicUnlockButton.addEventListener("click", handleMusicUnlock);
 
-    musicUnlock.addEventListener("touchstart", handleMusicUnlock, { passive: false });
-    musicUnlock.addEventListener("pointerup", handleMusicUnlock);
+    musicUnlock.addEventListener("touchend", handleMusicUnlock, { passive: true });
     musicUnlock.addEventListener("click", handleMusicUnlock);
 
     backgroundMusic.addEventListener(
